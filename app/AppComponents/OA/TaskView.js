@@ -10,6 +10,7 @@ import {
 
 import SealApplyViewComponent from './SealApplyViewComponent';
 import CarApplyViewComponent from './CarApplyViewComponent';
+import MeetingApplyViewComponent from './MeetingApplyViewComponent';
 import ActivitiesViewComponent from './ActivitiesViewComponent';
 import KServices from '../../NetworkService/KalixServices';
 
@@ -48,6 +49,8 @@ export default class TaskView extends Component {
       return 'sealapplys';
     } else if (task.indexOf('carapply') === 0) {
       return 'carapplys';
+    } else if (task.indexOf('meetingapply') === 0) {
+      return 'meetingapplys';
     }
 
     return '';
@@ -101,6 +104,9 @@ export default class TaskView extends Component {
         break;
       case 'carapplys':
         taskType = <CarApplyViewComponent entityId={this.props.model.entityId} />;
+        break;
+      case 'meetingapplys':
+        taskType = <MeetingApplyViewComponent entityId={this.props.model.entityId} />;
         break;
       default:
         break;
