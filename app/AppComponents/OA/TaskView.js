@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import SealApplyViewComponent from './SealApplyViewComponent';
+import CarApplyViewComponent from './CarApplyViewComponent';
 import ActivitiesViewComponent from './ActivitiesViewComponent';
 import KServices from '../../NetworkService/KalixServices';
 
@@ -42,15 +43,7 @@ export default class TaskView extends Component {
     model: React.PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      submited: false,
-      text: '',
-    };
-  }
-  analysisTask(task) {
+  static analysisTask(task) {
     if (task.indexOf('sealapply') === 0) {
       return 'sealapplys';
     } else if (task.indexOf('carapply') === 0) {
@@ -60,9 +53,18 @@ export default class TaskView extends Component {
     return '';
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      submited: false,
+      text: '',
+    };
+  }
+
   auditOnPress(result) {
     const that = this;
-    const taskPath = this.analysisTask(this.props.model.businessKey);
+    const taskPath = TaskView.analysisTask(this.props.model.businessKey);
     if (taskPath !== '') {
       this.setState({
         submited: true,
@@ -93,8 +95,15 @@ export default class TaskView extends Component {
 
   render() {
     let taskType;
-    if (this.props.model.businessKey.indexOf('sealapply') === 0) {
-      taskType = <SealApplyViewComponent entityId={this.props.model.entityId} />;
+    switch (TaskView.analysisTask(this.props.model.businessKey)) {
+      case 'sealapplys':
+        taskType = <SealApplyViewComponent entityId={this.props.model.entityId} />;
+        break;
+      case 'carapplys':
+        taskType = <CarApplyViewComponent entityId={this.props.model.entityId} />;
+        break;
+      default:
+        break;
     }
 
     const activitiesView = (<ActivitiesViewComponent

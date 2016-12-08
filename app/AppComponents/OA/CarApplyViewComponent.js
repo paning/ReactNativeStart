@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class SealApplyViewComponent extends Component {
+export default class CarApplyViewComponent extends Component {
   static propTypes = {
     entityId: React.PropTypes.string,
   };
@@ -68,19 +68,22 @@ export default class SealApplyViewComponent extends Component {
       loaded: true,
       title: '',              // 名称
       orgName: '',            // 申请部门
-      creationDate: '',       // 申请时间
-      usageCount: 0,          // 用印数
-      sealType: 0,            // 印章类别
-      createBy: '',           // 经办人
+      applyDate: '',          // 申请时间
+      reason: '',             // 用车事由
+      usageCount: 0,          // 乘车人数
+      beginDate: '',          // 用车时段
+      endDate: '',            // 用车时段
+      address: '',            // 用车起始地点
+      city: true,             // 室内用车
+      createBy: '',           // 申请人
+      operatorPhone: '',      // 联系电话
       currentNode: '',        // 当前节点
-      status: '',             // 状态
+      status: 1,              // 状态
       auditResult: '',        // 审批状态
-      departmentHead: '',     // 部门负责人
-      filialeHead: '',        // 分公司负责人
-      counsel: '',            // 法律顾问
-      generalManager: '',     // 总经理
-      sealAdministrator: '',  // 印章专管员
-      remark: '',             // 备注
+      depUser: '',            // 部门负责人
+      managerUser: '',        // 副校级领导
+      schoolUser: '',         // 校务部
+      schoolManagerUser: '',  // 主管领导(市外)
     };
   }
 
@@ -90,7 +93,7 @@ export default class SealApplyViewComponent extends Component {
 
   loadData() {
     const that = this;
-    const path = `${KServices.restPath()}/sealapplys/${this.props.entityId}`;
+    const path = `${KServices.restPath()}/carapplys/${this.props.entityId}`;
     const promise = KServices.fetchPromise(path);
     promise
       .then(value => value.text())
@@ -118,19 +121,18 @@ export default class SealApplyViewComponent extends Component {
       <View style={styles.container}>
         <Text style={styles.text}>名称：{this.state.title}</Text>
         <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <Text style={styles.text}>申请时间：{this.state.creationDate}</Text>
-        <Text style={styles.text}>用印数：{this.state.usageCount}</Text>
-        <Text style={styles.text}>印章类别：{this.state.sealType}</Text>
-        <Text style={styles.text}>经办人：{this.state.createBy}</Text>
-        <Text style={styles.text}>当前节点：{this.state.currentNode}</Text>
-        <Text style={styles.text}>状态：{this.state.status}</Text>
-        <Text style={styles.text}>审批状态：{this.state.auditResult}</Text>
-        <Text style={styles.text}>部门负责人：{this.state.departmentHead}</Text>
-        <Text style={styles.text}>分公司负责人：{this.state.filialeHead}</Text>
-        <Text style={styles.text}>法律顾问：{this.state.counsel}</Text>
-        <Text style={styles.text}>总经理：{this.state.generalManager}</Text>
-        <Text style={styles.text}>印章专管员：{this.state.sealAdministrator}</Text>
-        <Text style={styles.text}>备注：{this.state.remark}</Text>
+        <Text style={styles.text}>申请时间：{this.state.applyDate}</Text>
+        <Text style={styles.text}>用车事由：{this.state.reason}</Text>
+        <Text style={styles.text}>乘车人数：{this.state.usageCount}</Text>
+        <Text style={styles.text}>用车时段：{this.state.beginDate} -- {this.state.endDate}</Text>
+        <Text style={styles.text}>用车起始地点：{this.state.address}</Text>
+        <Text style={styles.text}>室内用车：{this.state.city ? '是' : '否'}</Text>
+        <Text style={styles.text}>申请人：{this.state.createBy}</Text>
+        <Text style={styles.text}>联系电话：{this.state.operatorPhone}</Text>
+        <Text style={styles.text}>部门负责人：{this.state.depUser}</Text>
+        <Text style={styles.text}>副校级领导：{this.state.managerUser}</Text>
+        <Text style={styles.text}>校务部：{this.state.schoolUser}</Text>
+        <Text style={styles.text}>主管领导(市外)：{this.state.schoolManagerUser}</Text>
       </View>
     );
   }
