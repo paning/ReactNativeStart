@@ -53,6 +53,8 @@ export default class TaskView extends Component {
   analysisTask(task) {
     if (task.indexOf('sealapply') === 0) {
       return 'sealapplys';
+    } else if (task.indexOf('carapply') === 0) {
+      return 'carapplys';
     }
 
     return '';

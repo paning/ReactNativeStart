@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import KServices from '../NetworkService/KalixServices';
 
@@ -39,7 +40,6 @@ const LoginStyles = StyleSheet.create({
   loginText: {
     color: '#ffffff',
     fontWeight: 'bold',
-    width: 30,
   },
   loginTextView: {
     marginTop: 10,
@@ -158,9 +158,14 @@ export default class LoginComponent extends Component {
             />
           </View>
 
-          <TouchableOpacity onPress={() => this.onPressLogin()} style={LoginStyles.loginTextView}>
-            <Text style={LoginStyles.loginText}>登录</Text>
-          </TouchableOpacity>
+          <Button
+            onPress={() => this.onPressLogin()}
+            raised
+            icon={{ name: 'cached' }}
+            title="登录"
+            buttonStyle={LoginStyles.loginTextView}
+            textStyle={LoginStyles.loginText}
+          />
 
           <Text style={{ color: '#4A90E2', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
         </View>
