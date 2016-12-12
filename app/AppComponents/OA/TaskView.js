@@ -12,6 +12,7 @@ import SealApplyViewComponent from './SealApplyViewComponent';
 import CarApplyViewComponent from './CarApplyViewComponent';
 import MeetingApplyViewComponent from './MeetingApplyViewComponent';
 import RecruitApplyViewComponent from './RecruitApplyViewComponent';
+import EmployApplyViewComponent from './EmployApplyViewComponent';
 import ActivitiesViewComponent from './ActivitiesViewComponent';
 import KServices from '../../NetworkService/KalixServices';
 
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
 
 export default class TaskView extends Component {
   static propTypes = {
+    navigator: React.PropTypes.object,
     model: React.PropTypes.object,
   };
 
@@ -54,6 +56,8 @@ export default class TaskView extends Component {
       return 'meetingapplys';
     } else if (task.indexOf('recruitapply') === 0) {
       return 'recruitapplys';
+    } else if (task.indexOf('employapply') === 0) {
+      return 'employapplys';
     }
 
     return '';
@@ -113,6 +117,9 @@ export default class TaskView extends Component {
         break;
       case 'recruitapplys':
         taskType = <RecruitApplyViewComponent entityId={this.props.model.entityId} />;
+        break;
+      case 'employapplys':
+        taskType = <EmployApplyViewComponent entityId={this.props.model.entityId} />;
         break;
       default:
         break;
