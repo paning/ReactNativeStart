@@ -1,60 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
 } from 'react-native';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Style from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class RecruitApplyViewComponent extends Component {
   static propTypes = {
@@ -117,21 +69,71 @@ export default class RecruitApplyViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>名称：{this.state.title}</Text>
-        <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <Text style={styles.text}>申请事由：{this.state.reason}</Text>
-        <Text style={styles.text}>拟聘人数：{this.state.recruitCount}</Text>
-        <Text style={styles.text}>定编人数：{this.state.allocationCount}</Text>
-        <Text style={styles.text}>现有人数：{this.state.existCount}</Text>
-        <Text style={styles.text}>核心职责：{this.state.coreRecruit}</Text>
-        <Text style={styles.text}>常规职责：{this.state.commonRecruit}</Text>
-        <Text style={styles.text}>待遇标准：{this.state.treatmentLevel}</Text>
-        <Text style={styles.text}>任职基本条件：{this.state.baseCondition}</Text>
-        <Text style={styles.text}>建议招聘方式：{this.state.recruitType}</Text>
-        <Text style={styles.text}>申请人：{this.state.createBy}</Text>
-        <Text style={styles.text}>部门负责人：{this.state.depUser}</Text>
-        <Text style={styles.text}>人力资源处长：{this.state.manpower}</Text>
+      <View>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>名称</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.title}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请部门</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.orgName}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.createBy}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请事由</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.reason}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>拟聘人数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.recruitCount}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>定编人数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.allocationCount}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>现有人数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.existCount}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>核心职责</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.coreRecruit}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>常规职责</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.commonRecruit}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>待遇标准</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.treatmentLevel}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>建议招聘方式</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.recruitType}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>任职基本条件</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.baseCondition}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>部门负责人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.depUser}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>人力资源处长</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.manpower}</Text>
+          </View>
+        </Section>
       </View>
     );
   }

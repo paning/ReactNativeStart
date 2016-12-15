@@ -8,10 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Section from '../Section';
+import Colors from '../../CommonComponents/Colors';
 import Styles from '../../CommonComponents/CommonStyles';
-
 import SealApplyViewComponent from './SealApplyViewComponent';
 import CarApplyViewComponent from './CarApplyViewComponent';
 import MeetingApplyViewComponent from './MeetingApplyViewComponent';
@@ -20,49 +18,7 @@ import EmployApplyViewComponent from './EmployApplyViewComponent';
 import ActivitiesViewComponent from './ActivitiesViewComponent';
 import KServices from '../../NetworkService/KalixServices';
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: 'white',
-  },
-  buttonView: {
-    flex: 1,
-    margin: 20,
-    height: 50,
-    backgroundColor: '#3281DD',
-    borderRadius: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-    width: 50,
-  },
-
-  iconButtonLine: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderColor: '#C8C7CC',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-
-  titileText: {
-    padding: 10,
-    color: '#000000',
-  },
-
-  contentText: {
-    padding: 10,
-    color: '#C7C7CC',
-  },
-});
-
-export default class TaskView extends Component {
+export default class MyProcessHistoryView extends Component {
   static propTypes = {
     navigator: React.PropTypes.object,
     model: React.PropTypes.object,
@@ -95,7 +51,7 @@ export default class TaskView extends Component {
 
   auditOnPress(result) {
     const that = this;
-    const taskPath = TaskView.analysisTask(this.props.model.businessKey);
+    const taskPath = MyProcessHistoryView.analysisTask(this.props.model.businessKey);
     if (taskPath !== '') {
       this.setState({
         submited: true,
@@ -126,7 +82,7 @@ export default class TaskView extends Component {
 
   render() {
     let taskType;
-    switch (TaskView.analysisTask(this.props.model.businessKey)) {
+    switch (MyProcessHistoryView.analysisTask(this.props.model.businessKey)) {
       case 'sealapplys':
         taskType = <SealApplyViewComponent entityId={this.props.model.entityId} />;
         break;
@@ -157,21 +113,6 @@ export default class TaskView extends Component {
       <ScrollView style={Styles.container}>
         {taskType}
         {activitiesView}
-        <Section name="审核意见">
-          <TextInput
-            style={{ height: 60, borderColor: 'gray', borderWidth: 1 }}
-            onChangeText={text => this.setState({ text })}
-            value={this.state.text}
-          />
-        </Section>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableOpacity onPress={() => this.auditOnPress('同意')} style={styles.buttonView}>
-            <Text style={styles.buttonText}>同意</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.auditOnPress('不同意')} style={styles.buttonView}>
-            <Text style={styles.buttonText}>不同意</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
     );
   }

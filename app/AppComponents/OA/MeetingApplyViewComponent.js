@@ -1,60 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
 } from 'react-native';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Style from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class MeetingApplyViewComponent extends Component {
   static propTypes = {
@@ -122,23 +74,79 @@ export default class MeetingApplyViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>名称：{this.state.title}</Text>
-        <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <Text style={styles.text}>会议地点：{this.state.meetingroomName}</Text>
-        <Text style={styles.text}>会议主题：{this.state.meetingTopic}</Text>
-        <Text style={styles.text}>宣传需求（企划中心）：{this.state.requireType}</Text>
-        <Text style={styles.text}>主持人：{this.state.host}</Text>
-        <Text style={styles.text}>使用时间：{this.state.meetingDate}</Text>
-        <Text style={styles.text}>参会人员：{this.state.participant}</Text>
-        <Text style={styles.text}>出席人数：{this.state.attendance}</Text>
-        <Text style={styles.text}>设备要求：{this.state.equipmentRequirement}</Text>
-        <Text style={styles.text}>联系人（安全责任人）：{this.state.securityPerson}</Text>
-        <Text style={styles.text}>手机号码：{this.state.securityTel}</Text>
-        <Text style={styles.text}>申请人：{this.state.createBy}</Text>
-        <Text style={styles.text}>联系电话：{this.state.operatorPhone}</Text>
-        <Text style={styles.text}>校务部行政事务办主管：{this.state.schoolAdminUser}</Text>
-        <Text style={styles.text}>校务部副部长：{this.state.schoolUser}</Text>
+      <View>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>名称</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.title}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请部门</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.orgName}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>会议地点</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.meetingroomName}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>会议主题</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.meetingTopic}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>宣传需求（企划中心）</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.requireType}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>主持人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.host}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>使用时间</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.meetingDate}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>参会人员</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.participant}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>出席人数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.attendance}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>设备要求</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.equipmentRequirement}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>联系人（安全责任人）</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.securityPerson}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>手机号码</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.securityTel}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.createBy}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>联系电话</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.operatorPhone}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>校务部行政事务办主管</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.schoolAdminUser}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>校务部副部长</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.schoolUser}</Text>
+          </View>
+        </Section>
       </View>
     );
   }

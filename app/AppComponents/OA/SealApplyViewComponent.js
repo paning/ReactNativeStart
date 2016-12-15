@@ -1,60 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
 } from 'react-native';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Style from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class SealApplyViewComponent extends Component {
   static propTypes = {
@@ -115,22 +67,61 @@ export default class SealApplyViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>名称：{this.state.title}</Text>
-        <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <Text style={styles.text}>申请时间：{this.state.creationDate}</Text>
-        <Text style={styles.text}>用印数：{this.state.usageCount}</Text>
-        <Text style={styles.text}>印章类别：{this.state.sealType}</Text>
-        <Text style={styles.text}>经办人：{this.state.createBy}</Text>
-        <Text style={styles.text}>当前节点：{this.state.currentNode}</Text>
-        <Text style={styles.text}>状态：{this.state.status}</Text>
-        <Text style={styles.text}>审批状态：{this.state.auditResult}</Text>
-        <Text style={styles.text}>部门负责人：{this.state.departmentHead}</Text>
-        <Text style={styles.text}>分公司负责人：{this.state.filialeHead}</Text>
-        <Text style={styles.text}>法律顾问：{this.state.counsel}</Text>
-        <Text style={styles.text}>总经理：{this.state.generalManager}</Text>
-        <Text style={styles.text}>印章专管员：{this.state.sealAdministrator}</Text>
-        <Text style={styles.text}>备注：{this.state.remark}</Text>
+      <View>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>名称</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.title}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请部门</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.orgName}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请时间</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.creationDate}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>用印数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.usageCount}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>印章类别</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.sealType}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>经办人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.createBy}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>部门负责人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.departmentHead}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>分公司负责人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.filialeHead}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>法律顾问</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.counsel}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>总经理</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.generalManager}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>印章专管员</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.sealAdministrator}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>备注</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.remark}</Text>
+          </View>
+        </Section>
       </View>
     );
   }

@@ -1,61 +1,14 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   ListView,
 } from 'react-native';
+
+import Section from '../Section';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Style from '../../CommonComponents/CommonStyles';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class ActivitiesViewComponent extends Component {
   static propTypes = {
@@ -64,15 +17,24 @@ export default class ActivitiesViewComponent extends Component {
 
   static renderRow(rowData, sectionID, rowID) {
     return (
-      <View id={rowID}>
-        <View>
-          <Text>节点名称：{rowData.activityName}</Text>
-          <Text>执行人：{rowData.assignee}</Text>
-          <Text>开始时间：{rowData.startTime}</Text>
-          <Text>结束时间：{rowData.endTime}</Text>
-          <Text>持续时长：{rowData.durationInMillis}</Text>
-          <Text>审批结果：{rowData.result}</Text>
-          <Text>审批意见：{rowData.comment}</Text>
+      <View style={Style.rowContentView}>
+        <View style={Style.rowContent} >
+          <View style={Style.rowLineBetween} >
+            <Text style={Style.rowLineTitle}>
+              {rowData.activityName}
+            </Text>
+            <Text style={Style.rowLineTitle}>
+              {rowData.result}
+            </Text>
+          </View>
+          <View style={Style.rowLineBetween} >
+            <Text style={Style.rowLineContent} >
+              {rowData.assignee}
+            </Text>
+            <Text style={Style.rowLineContent} >
+              {rowData.startTime}
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -131,7 +93,7 @@ export default class ActivitiesViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Section name="流程历史">
         <ListView
           dataSource={this.state.dataSource}
           renderRow={ActivitiesViewComponent.renderRow}
@@ -141,7 +103,7 @@ export default class ActivitiesViewComponent extends Component {
           contentOffset={{ x: 0, y: 0 }}
           scrollRenderAheadDistance={50}
         />
-      </View>
+      </Section>
     );
   }
 }

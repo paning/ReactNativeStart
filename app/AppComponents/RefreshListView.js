@@ -2,20 +2,17 @@ import React, { Component } from 'react';
 import {
   ListView,
   View,
-  ActivityIndicatorIOS,
   Text,
-  AppRegistry,
-  Navigator,
-  RefreshControl,
   Platform,
   ActivityIndicator,
   StyleSheet,
-
 } from 'react-native';
 
 import CommonComponents from '../CommonComponents/CommonComponents';
-import KServices from '../NetworkService/KalixServices';
+import Section from './Section';
 import ErrorPlaceholder from '../CommonComponents/ErrorPlacehoderComponent';
+import KServices from '../NetworkService/KalixServices';
+
 
 const LISTVIEWREF = 'listview';
 const CONTAINERREF = 'container';
@@ -107,19 +104,50 @@ const styles = StyleSheet.create({
 });
 
 export default class RefreshListView extends Component {
+  static propTypes = {
+    maxPage: React.PropTypes.number,
+    reloadPromisePath: React.PropTypes.func,
+    reloadPromise: React.PropTypes.func,
+    /**
+     * return an array of handled data, (value) => {}
+     */
+    handleReloadData: React.PropTypes.func,
+    /**
+     * return an append promise
+     */
+    appendPromise: React.PropTypes.func,
+    /**
+     * return an array of handled data, (value) => {}
+     */
+    handleAppendData: React.PropTypes.func,
+    /**
+     * return if need to load needPage
+     */
+    needNextPage: React.PropTypes.func,
+    /**
+     * render the row, like ListView
+     */
+    renderRow: React.PropTypes.func,
+    /**
+     * handle the load error ({isReloadError: false, error: null}) => {}
+     */
+    handleError: React.PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
 
-    this._dataSource = [];
-    this._page = 1;
-    this._limit = 10;
-    this._maxPage = -1;
-    this._loading = false;
-    this._loaded = false;
-    this._loadPath = null;
+    this.dataSource = [];
+    this.totalCount = 0;
+    this.page = 1;
+    this.limit = 10;
+    this.maxPage = -1;
+    this.loading = false;
+    this.loaded = false;
+    this.loadPath = null;
 
-    this._maxPage = this.props.maxPage || -1;
-    this._loaded = false;
+    this.maxPage = this.props.maxPage || -1;
+    this.loaded = false;
 
     const dataSourceParam = {
       rowHasChanged: (row1, row2) => row1 !== row2,
@@ -137,97 +165,84 @@ export default class RefreshListView extends Component {
     this.reloadData();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const node = this.refs[LISTVIEWREF];
+    if (!node || !this.props.enablePullToRefresh) return;
+  }
+
   reloadDataIfNeed() {
-    const pathChanged = this._loadPath != this.props.reloadPromisePath();
-    if (this._dataSource.length == 0 || pathChanged) {
+    const pathChanged = this.loadPath !== this.props.reloadPromisePath();
+    if (this.dataSource.length === 0 || pathChanged) {
       this.reloadData();
     }
   }
 
-  clearData() {
-    this._dataSource = [];
-    this._setNeedsRenderList([]);
-    this._page = 1;
-    this._limit = 10;
-    this._maxPage = 1;
-    this._loading = false;
+  computePage() {
+    if (this.totalCount === 0) {
+      this.maxPage = -1;
+    }
+
+    this.maxPage = Math.ceil(this.totalCount / this.limit);
   }
 
-  _pageString(path) {
+  clearData() {
+    this.dataSource = [];
+    this.setNeedsRenderList([]);
+    this.page = 1;
+    this.limit = 10;
+    this.totalCount = 0;
+    this.maxPage = 1;
+    this.loading = false;
+  }
+
+  pageString(path) {
     const testReg = /\w+[?]\w+/;
+    let paths = path;
     if (testReg.test(path)) {
-      path += `&page=${this._page}`;
+      paths += `&page=${this.page}`;
     } else {
-      path += `?page=${this._page}`;
+      paths += `?page=${this.page}`;
     }
-    const start = (this._page - 1) * this._limit;
-    path += `&start=${start}&limit=${this._limit}`;
-    return path;
+    const start = (this.page - 1) * this.limit;
+    paths += `&start=${start}&limit=${this.limit}`;
+    return paths;
   }
 
   reloadData() {
     const that = this;
     let path = this.props.reloadPromisePath();
-    this._loadPath = path;
+    this.loadPath = path;
 
-    if (!path || this._loading) return;
+    if (!path || this.loading) return;
 
-    this._loading = true;
+    this.loading = true;
     this.setState({
       lastError: { isReloadError: false, error: null },
       loaded: this.state.dataSource.getRowCount() > 0,
       isRefreshing: true,
     });
-    this._dataSource = [];
-    this._page = 1;
+    this.dataSource = [];
+    this.page = 1;
 
-    path = this._pageString(path);
+    path = this.pageString(path);
     const reloadPromise = KServices.fetchPromise(path);
     reloadPromise
       .then((value) => {
-        // look for the last page
-        if (this._maxPage == -1) {
-          const links = value.headers.map.link && value.headers.map.link[0];
-          if (links) {
-            const reg = /page=(\d+)\S+\s+rel="last"/g;
-            const matchs = reg.exec(links);
-            const end = matchs[1];
-            if (end) {
-              this._maxPage = end;
-            }
-          }
-        }
-
-        if (value.status > 400) {
-          const body = JSON.parse(value._bodyInit);
-          const needLogin = body.message.indexOf('rate') != -1;
-          if (needLogin) {
-            this.props.navigator.push({
-              id: 'login',
-              title: 'API rate need login',
-              sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            });
-          }
-        }
-
         return value.text();
       })
       .then((responseText) => {
-        const t = JSON.parse(responseText)
-        const rdata = t.data;
-        // this._setNeedsRenderList(rdata);
-        const _ds = JSON.parse(JSON.stringify(rdata)); // clone datasorce, force renderRow update
+        const json = JSON.parse(responseText);
+        that.totalCount = json.totalCount;
+        that.computePage();
+        const rdata = json.data;
+        const ds = JSON.parse(JSON.stringify(rdata)); // clone datasorce, force renderRow update
 
-        that._dataSource.push(..._ds);
+        that.dataSource.push(...ds);
 
         that.setState({
-          dataSource: that.state.dataSource.cloneWithRows(this._dataSource),
+          dataSource: that.state.dataSource.cloneWithRows(that.dataSource),
           loaded: true,
         });
-
-        if (that._dataSource.length == 0) {
-          throw new Error('Not Found');
-        }
       })
       .catch((err) => {
         // const pError = {
@@ -236,15 +251,16 @@ export default class RefreshListView extends Component {
         // };
         // this.props.handleError && this.props.handleError(pError);
         // this.setState(pError);
+        alert(err);
       })
       .done(() => {
-        const node = this.refs[LISTVIEWREF];
-        if (node && this.props.enablePullToRefresh) {
-          // DXRefreshControl.endRefreshing(node);
-        }
+        // const node = this.refs[LISTVIEWREF];
+        // if (node && this.props.enablePullToRefresh) {
+        //   // DXRefreshControl.endRefreshing(node);
+        // }
 
-        this._loading = false;
-        this.setState({
+        that.loading = false;
+        that.setState({
           isRefreshing: false,
         });
       });
@@ -253,14 +269,14 @@ export default class RefreshListView extends Component {
   appendPage() {
     const that = this;
 
-    if (this._page > this._maxPage) return;
+    if (this.page > this.maxPage) return;
 
-    this._page ++;
+    this.page = this.page + 1;
 
     let path = this.props.reloadPromisePath();
     if (!path) return;
 
-    path = this._pageString(path);
+    path = this.pageString(path);
     console.log('appendPage path', path);
     const appendPromise = KServices.fetchPromise(path);
     appendPromise
@@ -268,17 +284,14 @@ export default class RefreshListView extends Component {
          value.text(),
       )
       .then((responseText) => {
-        const t = JSON.parse(responseText)
+        const t = JSON.parse(responseText);
         const rdata = t.data;
-        // const rdata = WorkReportComponent.handleReloadData(responseText);
-       // that._setNeedsRenderList(rdata);
+        const ds = JSON.parse(JSON.stringify(rdata)); // clone datasorce, force renderRow update
 
-        const _ds = JSON.parse(JSON.stringify(rdata)); // clone datasorce, force renderRow update
-
-        that._dataSource.push(..._ds);
+        that.dataSource.push(...ds);
 
         that.setState({
-          dataSource: that.state.dataSource.cloneWithRows(this._dataSource),
+          dataSource: that.state.dataSource.cloneWithRows(that.dataSource),
           loaded: true,
         });
       })
@@ -290,42 +303,19 @@ export default class RefreshListView extends Component {
          lastError: { isReloadError: false, error: err },
        };
        that.setState(pError);
-       that._page --;
+       that.page = that.page - 1;
 
        that.props.handleError && that.props.handleError(pError);
      });
   }
 
-  _setNeedsRenderList(rdata) {
-    this._dataSource.push(...rdata);
+  setNeedsRenderList(rdata) {
+    this.dataSource.push(...rdata);
 
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this._dataSource),
+      dataSource: this.state.dataSource.cloneWithRows(this.dataSource),
       loaded: true,
     });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const node = this.refs[LISTVIEWREF];
-    if (!node || !this.props.enablePullToRefresh) return;
-
-    // DXRefreshControl.configureCustom(node, {
-    //   headerViewClass: 'UIRefreshControl',
-    // }, this.reloadData);
-  }
-
-  renderRow(rowData, sectionID, rowID) {
-    return (
-      <View style={styles.listItem} id={rowID}>
-        <View style={styles.itemContent}>
-          <Text style={styles.itemTitle}>{rowData.title}</Text>
-          <Text style={styles.itemDesc}>更新时间：{rowData.desc}</Text>
-        </View>
-        <TouchableHighlight style={[styles.buttonSmall]} onPress={() => this.onItemPress(rowData)} underlayColor="#06f">
-          <Text style={[styles.buttonSmallText]}>更新</Text>
-        </TouchableHighlight>
-      </View>
-    );
   }
 
   render() {
@@ -337,52 +327,28 @@ export default class RefreshListView extends Component {
       const error = this.state.lastError.error;
       if (this.props.renderErrorPlaceholder) {
         return this.props.renderErrorPlaceholder(error);
-      } else {
-        return (
-          <ErrorPlaceholder
-            title={error.message}
-            desc={'Oops, tap to reload'}
-            onPress={this.reloadData}
-          />
-        );
       }
+
+      return (
+        <ErrorPlaceholder
+          title={error.message}
+          desc={'Oops, tap to reload'}
+          onPress={this.reloadData}
+        />
+      );
     }
 
     if (Platform.OS === 'android') {
       return (
-          // <ListView
-          //   dataSource={this.state.dataSource}
-          //   renderRow={this.props.renderRow.bind(this)}
-          //   removeClippedSubviews={true}
-          //   renderFooter={this.renderFooter.bind(this)}
-          //   onEndReached={this.appendPage.bind(this)}
-          //   scrollRenderAheadDistance={50}
-          //   {...this.props}
-          //   style={[{flex: 1}, this.props.style]}
-          //   refreshControl={
-          //     <RefreshControl
-          //       refreshing={this.state.isRefreshing}
-          //       onRefresh={this.reloadData.bind(this)}
-          //       tintColor="#ff0000"
-          //       title="Loading..."
-          //       titleColor="#00ff00"
-          //       colors={['#ff0000', '#00ff00', '#0000ff']}
-          //       progressBackgroundColor="#ffff00"
-          //     />
-          //   }
-          //   >
-          // </ListView>
-
-        <View style={styles.container}>
-          <Text style={styles.title}>aHostsApp</Text>
-          <View style={styles.separator} />
           <ListView
             style={styles.listGroup}
             dataSource={this.state.dataSource}
+            enableEmptySections={true}
             renderRow={this.props.renderRow.bind(this)}
-            onEndReached={this.appendPage.bind(this)}
+            onEndReached={() => this.appendPage()}
+            renderFooter={() => this.renderFooter()}
+            scrollRenderAheadDistance={50}
           />
-        </View>
       );
     } else if (Platform.OS === 'ios') {
       return (
@@ -407,12 +373,18 @@ export default class RefreshListView extends Component {
 
   renderFooter() {
     const lastError = this.state.lastError;
-    if (this._maxPage > this._page && !lastError.error) {
+    if (this.maxPage > this.page && !lastError.error) {
       return (
         <View style={styles.appendLoading}>
           <ActivityIndicator styleAttr="Small" />
         </View>
       );
     }
+
+    return (
+      <View style={{ alignItems: 'center', padding: 10 }}>
+        <Text>{this.totalCount}条记录</Text>
+      </View>
+    );
   }
 }

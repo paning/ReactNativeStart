@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,12 +13,11 @@ import {
 import DrawerLayout from 'react-native-drawer-layout';
 
 import KService from '../../NetworkService/KalixServices';
-import TaskCell from './TaskCell';
+import MyProcessHistoryCell from './MyProcessHistoryCell';
 import RefreshListView from '../RefreshListView';
 import Colors from '../../CommonComponents/Colors';
-import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
 import Styles from '../../CommonComponents/CommonStyles';
-import {formatDate} from '../../CommonComponents/FormatUtil';
+import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TaskComponent extends Component {
+export default class MyProcessHistoryComponent extends Component {
   static propTypes = {
     navigator: React.PropTypes.object,
     route: React.PropTypes.object,
@@ -198,7 +197,7 @@ export default class TaskComponent extends Component {
   reloadPath() {
     const jsonstr = {};
 
-    const path = `${KService.restPath()}/workflow/tasks?jsonstr=${JSON.stringify(jsonstr)}`;
+    const path = `${KService.restPath()}/workflow/myHistory?jsonstr=${JSON.stringify(jsonstr)}`;
     return encodeURI(path);
   }
 
@@ -206,7 +205,7 @@ export default class TaskComponent extends Component {
   async showPicker(stateKey, options) {
     try {
       const newState = {};
-      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      const { action, year, month, day } = await DatePickerAndroid.open(options);
       if (action === DatePickerAndroid.dismissedAction) {
         // newState[stateKey + 'Text'] = 'dismissed';
       } else {
@@ -215,7 +214,7 @@ export default class TaskComponent extends Component {
         newState[`${stateKey}Date`] = date;
       }
       this.setState(newState);
-    } catch ({code, message}) {
+    } catch ({ code, message }) {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   }
@@ -283,14 +282,14 @@ export default class TaskComponent extends Component {
 
   renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <TaskCell key={rowID} cell={rowData} navigator={this.props.navigator}/>
+      <MyProcessHistoryCell key={rowID} cell={rowData} navigator={this.props.navigator} />
     );
   }
 
   renderNavigationView() {
     return (
       <View style={[styles.drawerContainer, { backgroundColor: '#fcfcfc' }]}>
-        <View style={styles.drawerTitleContainer}>
+        <View style={styles.drawerTitleContainer} >
           <Text style={styles.drawerTitle}>
             筛选
           </Text>
@@ -311,7 +310,7 @@ export default class TaskComponent extends Component {
   }
 
   render() {
-    let marginTop = 44;
+    let marginTop = 100;
     if (Platform.OS === 'ios') {
       marginTop = 0;
     }
@@ -327,13 +326,11 @@ export default class TaskComponent extends Component {
         >
           <RefreshListView
             ref={(ref) => { this.listView = ref; }}
-            style={{ flex: 1, marginTop }}
             enablePullToRefresh
             renderRow={this.renderRow}
             reloadPromisePath={() => this.reloadPath()}
-            handleReloadData={TaskComponent.handleReloadData}
+            handleReloadData={MyProcessHistoryComponent.handleReloadData}
             navigator={this.props.navigator}
-            maxPage={5}
             contentInset={{ top: 64, left: 0, bottom: 49, right: 0 }}
             contentOffset={{ x: 0, y: -64 }}
             renderErrorPlaceholder={this.renderErrorPlaceholder}

@@ -17,7 +17,7 @@ const LoginStyles = StyleSheet.create({
   loginview: {
     flex: 1,
     padding: 30,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f5f2e1',
   },
 
   TextInputView: {
@@ -44,7 +44,7 @@ const LoginStyles = StyleSheet.create({
   loginTextView: {
     marginTop: 10,
     height: 50,
-    backgroundColor: '#3281DD',
+    backgroundColor: '#625c38',
     borderRadius: 5,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -135,6 +135,12 @@ export default class LoginComponent extends Component {
           <Image source={logo} />
         </View>
 
+        <View
+          style={{ flexDirection: 'row', height: 100, marginTop: 1, justifyContent: 'center', alignItems: 'flex-start' }}
+        >
+          <Text>校园信息化管理系统</Text>
+        </View>
+
         <View style={{ marginTop: 80 }}>
           <View style={LoginStyles.TextInputView}>
             <TextInput
@@ -167,7 +173,7 @@ export default class LoginComponent extends Component {
             textStyle={LoginStyles.loginText}
           />
 
-          <Text style={{ color: '#4A90E2', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
+          <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
         </View>
       </View>
     );

@@ -133,6 +133,17 @@ export default class OA extends Component {
               <Text>代办流程</Text>
             </TouchableOpacity>
           </View>
+          <View>
+            <TouchableOpacity style={styles.item} onPress={() => this.onPress('myprocesshistory')}>
+              <Icon
+                name={'history'}
+                size={30}
+                style={{ paddingRight: 10, marginTop: 10 }}
+                color={Colors.blue}
+              />
+              <Text>我的流程</Text>
+            </TouchableOpacity>
+          </View>
         </Section>
       </View>
     );

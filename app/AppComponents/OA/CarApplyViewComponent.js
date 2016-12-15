@@ -1,60 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
 } from 'react-native';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Style from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class CarApplyViewComponent extends Component {
   static propTypes = {
@@ -118,21 +70,71 @@ export default class CarApplyViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>名称：{this.state.title}</Text>
-        <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <Text style={styles.text}>申请时间：{this.state.applyDate}</Text>
-        <Text style={styles.text}>用车事由：{this.state.reason}</Text>
-        <Text style={styles.text}>乘车人数：{this.state.usageCount}</Text>
-        <Text style={styles.text}>用车时段：{this.state.beginDate} -- {this.state.endDate}</Text>
-        <Text style={styles.text}>用车起始地点：{this.state.address}</Text>
-        <Text style={styles.text}>室内用车：{this.state.city ? '是' : '否'}</Text>
-        <Text style={styles.text}>申请人：{this.state.createBy}</Text>
-        <Text style={styles.text}>联系电话：{this.state.operatorPhone}</Text>
-        <Text style={styles.text}>部门负责人：{this.state.depUser}</Text>
-        <Text style={styles.text}>副校级领导：{this.state.managerUser}</Text>
-        <Text style={styles.text}>校务部：{this.state.schoolUser}</Text>
-        <Text style={styles.text}>主管领导(市外)：{this.state.schoolManagerUser}</Text>
+      <View>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>名称</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.title}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请部门</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.orgName}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.createBy}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>联系电话</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.operatorPhone}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请时间</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.applyDate}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>用车事由</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.reason}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>乘车人数</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.usageCount}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>用车时段</Text>
+            <Text style={Style.sectionLineContentText}>
+              {this.state.beginDate} -- {this.state.endDate}
+            </Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>用车起始地点</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.address}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>室内用车</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.city ? '是' : '否'}</Text>
+          </View>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>部门负责人</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.depUser}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>副校级领导</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.managerUser}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>校务部</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.schoolUser}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>主管领导(市外)</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.schoolManagerUser}</Text>
+          </View>
+        </Section>
       </View>
     );
   }

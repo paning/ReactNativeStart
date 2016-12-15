@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Colors from '../CommonComponents/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../CommonComponents/Colors';
 
 import {
   StyleSheet,

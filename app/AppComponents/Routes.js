@@ -5,8 +5,6 @@ import {
   StyleSheet,
   PixelRatio,
   Text,
-  TextInput,
-  View,
   BackAndroid,
   Dimensions,
   Platform,
@@ -26,6 +24,8 @@ import OA from './OA/main';
 //
 import TaskComponent from './OA/TaskComponent';
 import TaskView from './OA/TaskView';
+import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
+import MyProcessHistoryView from './OA/MyProcessHistoryView'
 
 import Colors from '../CommonComponents/Colors';
 import LoginComponent from './LoginComponent';
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   navBar: {
-    backgroundColor: 'white',
+    backgroundColor: '#625c38',
     borderBottomColor: Colors.borderColor,
     borderBottomWidth: 0.5,
   },
@@ -64,10 +64,12 @@ const styles = StyleSheet.create({
     // color: cssVar('fbui-bluegray-60'),
     fontWeight: '500',
     marginVertical: 11,
+    color: 'white',
   },
   navBarLeftButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 10,
-    width: 40,
     height: 40,
   },
   navBarRightButton: {
@@ -129,8 +131,7 @@ const NavigationBarRouteMapper = {
         <Icon
           name="ios-arrow-back"
           size={30}
-          style={{ marginTop: 8 }}
-          color={Colors.blue}
+          color={Colors.backWhite}
         />
       </TouchableOpacity>
     );
@@ -218,6 +219,15 @@ const NavigationBarRouteMapper = {
       case 'task':
         title = '代办流程';
         break;
+      case 'taskView':
+        title = route.model.businessNo;
+        break;
+      case 'myprocesshistory':
+        title = '我的流程';
+        break;
+      case 'myProcessHistoryView':
+        title = route.model.name;
+        break;
       case 'repo':
         title = route.obj.name;
         break;
@@ -264,54 +274,6 @@ const NavigationBarRouteMapper = {
         title = 'Edit Profile';
         break;
       default:
-    }
-
-    const searchPlaceholder = 'Search users, repos';
-    if (title === 'Feed') {
-      return (
-        <TouchableOpacity
-          style={[styles.searchBar, { justifyContent: 'center' }]}
-          onPress={() => {
-            if (route.id === 'feed') {
-              // DXRNUtils.trackClick('clickSearch', {name: '点击搜索'});
-              navigator.push({ id: 'search' });
-            }
-          }}
-        >
-          <Icon
-            name={'ios-search'}
-            size={20}
-            style={styles.searchIcon}
-            color={Colors.black}
-          />
-          <Text style={[styles.textInput, { alignSelf: 'center', flex: 0 }]}>
-            {searchPlaceholder}
-          </Text>
-        </TouchableOpacity>
-      );
-    } else if (title === 'search') {
-      let fontSize = 14;
-      if (Platform.OS === 'android') {
-        fontSize = 12;
-      }
-      return (
-        <View style={[styles.searchBar, { width: ScreenWidth - 40, marginLeft: 40 }]}>
-          <Icon
-            name={'ios-search'}
-            size={20}
-            style={styles.searchIcon}
-            color={Colors.black}
-          />
-          <TextInput
-            style={[styles.textInput, { fontSize }]}
-            placeholder={searchPlaceholder}
-            autoFocus
-            onChangeText={route.sp.onChangeText}
-            onSubmitEditing={route.sp.onSubmitEditing}
-            clearButtonMode={'while-editing'}
-          />
-        </View>
-      );
     }
 
     return (
@@ -394,22 +356,26 @@ const routes = {
         return <TestListView navigator={navigator} route={route} />;
       case 'oa':
         return <OA navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'mainwork':
-      //   return <MainWorkComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'recruitapply':
-      //   return <RecruitApplyComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'employapply':
-      //   return <EmployApplyComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'meetingapply':
-      //   return <MeetingApplyComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'sealapply':
-      //   return <SealApplyComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      // case 'carapply':
-      //   return <CarApplyComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
       case 'task':
         return <TaskComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
       case 'taskView':
         return <TaskView navigator={navigator} model={route.model} style={{ flex: 1 }} />;
+      case 'myprocesshistory':
+        return (
+          <MyProcessHistoryComponent
+            navigator={navigator}
+            route={route}
+            style={{ flex: 1 }}
+          />
+        );
+      case 'myProcessHistoryView':
+        return (
+          <MyProcessHistoryView
+            navigator={navigator}
+            model={route.model}
+            style={{ flex: 1 }}
+          />
+        );
       case 'login':
         return (
           <LoginComponent

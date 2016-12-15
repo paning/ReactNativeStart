@@ -1,61 +1,15 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   TouchableOpacity,
   View,
   Text,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import CommonComponents from '../../CommonComponents/CommonComponents';
+import Colors from '../../CommonComponents/Colors';
+import Style from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
 import KServices from '../../NetworkService/KalixServices';
-
-const styles = StyleSheet.create({
-  cellContentView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-    padding: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-  },
-
-  itemImg: {
-    width: 88,
-    height: 66,
-    marginRight: 10,
-  },
-
-  itemRightContent: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-
-  itemRightBottom: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  userName: {
-    flex: 1,
-    fontSize: 14,
-    color: '#87CEFA',
-    marginTop: 5,
-    marginRight: 5,
-  },
-
-  timeAgo: {
-    fontSize: 14,
-    color: '#aaaaaa',
-    marginTop: 5,
-  },
-});
 
 export default class EmployApplyViewComponent extends Component {
   static propTypes = {
@@ -115,15 +69,64 @@ export default class EmployApplyViewComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>名称：{this.state.title}</Text>
-        <Text style={styles.text}>申请部门：{this.state.orgName}</Text>
-        <TouchableOpacity onPress={() => this.personInfoOnPress()} style={styles.buttonView}>
-          <Text style={styles.buttonText}>人员基本信息</Text>
-        </TouchableOpacity>
-        <Text style={styles.text}>分院领导审批：{this.state.branchSchoolLeader}</Text>
-        <Text style={styles.text}>校领导审批：{this.state.schoolLeader}</Text>
-        <Text style={styles.text}>人力资源部长签字：{this.state.manpower}</Text>
+      <View>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>名称</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.title}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>申请部门</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.orgName}</Text>
+          </View>
+        </Section>
+        <Section>
+          <TouchableOpacity onPress={() => this.personInfoOnPress()} style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>人员基本信息</Text>
+            <Icon
+              name={'angle-right'}
+              size={24}
+              style={{ padding: 10 }}
+              color={Colors.sectionLineIconColor}
+            />
+          </TouchableOpacity>
+        </Section>
+        <Section>
+          <TouchableOpacity onPress={() => this.personInfoOnPress()} style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>面试信息</Text>
+            <Icon
+              name={'angle-right'}
+              size={24}
+              style={{ padding: 10 }}
+              color={Colors.sectionLineIconColor}
+            />
+          </TouchableOpacity>
+        </Section>
+        <Section>
+          <TouchableOpacity onPress={() => this.personInfoOnPress()} style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>试讲信息</Text>
+            <Icon
+              name={'angle-right'}
+              size={24}
+              style={{ padding: 10 }}
+              color={Colors.sectionLineIconColor}
+            />
+          </TouchableOpacity>
+        </Section>
+        <Section>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>分院领导审批</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.branchSchoolLeader}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>校领导审批</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.schoolLeader}</Text>
+          </View>
+          <View style={Style.sectionLine}>
+            <Text style={Style.sectionLineTitleText}>人力资源部长签字</Text>
+            <Text style={Style.sectionLineContentText}>{this.state.manpower}</Text>
+          </View>
+        </Section>
       </View>
     );
   }

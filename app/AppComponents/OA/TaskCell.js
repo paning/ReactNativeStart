@@ -70,8 +70,7 @@ export default class TaskCell extends Component {
 
   render() {
     const cell = this.props.cell;
-
-    return (
+    const row = (
       <TouchableHighlight onPress={() => this.viewDetail()} underlayColor={Colors.lightGray}>
         <View style={styles.cellContentView}>
           <View style={styles.itemRightContent} >
@@ -89,6 +88,9 @@ export default class TaskCell extends Component {
           </View>
         </View>
       </TouchableHighlight>
+    );
+    return (
+      row
     );
   }
 }
