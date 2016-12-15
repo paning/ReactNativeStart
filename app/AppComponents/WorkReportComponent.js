@@ -16,6 +16,7 @@ import KService from '../NetworkService/KalixServices';
 import WorkReportCell from './WorkReportCell';
 import RefreshListView from './RefreshListView';
 import Colors from '../CommonComponents/Colors';
+import Styles from '../CommonComponents/CommonStyles';
 import ErrorPlaceholder from '../CommonComponents/ErrorPlacehoderComponent';
 import { formatDate } from '../CommonComponents/FormatUtil';
 
@@ -385,26 +386,28 @@ export default class WorkReportComponent extends Component {
 
     const drawerWidth = (Dimensions.get('window').width / 5) * 3;
     return (
-      <DrawerLayout
-        ref={(ref) => { this.drawer = ref; }}
-        drawerWidth={drawerWidth}
-        drawerPosition={Platform.OS === 'android' ? DrawerLayoutAndroid.positions.Right : 'right'}
-        renderNavigationView={() => this.renderNavigationView()}
-      >
-        <RefreshListView
-          ref={(ref) => { this.listView = ref; }}
-          style={{ flex: 1, marginTop }}
-          enablePullToRefresh
-          renderRow={this.renderRow}
-          reloadPromisePath={() => this.reloadPath()}
-          handleReloadData={WorkReportComponent.handleReloadData}
-          navigator={this.props.navigator}
-          maxPage={5}
-          contentInset={{ top: 64, left: 0, bottom: 49, right: 0 }}
-          contentOffset={{ x: 0, y: -64 }}
-          renderErrorPlaceholder={this.renderErrorPlaceholder}
-        />
-      </DrawerLayout>
+      <View style={Styles.container}>
+        <DrawerLayout
+          ref={(ref) => { this.drawer = ref; }}
+          drawerWidth={drawerWidth}
+          drawerPosition={Platform.OS === 'android' ? DrawerLayoutAndroid.positions.Right : 'right'}
+          renderNavigationView={() => this.renderNavigationView()}
+        >
+          <RefreshListView
+            ref={(ref) => { this.listView = ref; }}
+            style={{ flex: 1, marginTop }}
+            enablePullToRefresh
+            renderRow={this.renderRow}
+            reloadPromisePath={() => this.reloadPath()}
+            handleReloadData={WorkReportComponent.handleReloadData}
+            navigator={this.props.navigator}
+            maxPage={5}
+            contentInset={{ top: 64, left: 0, bottom: 49, right: 0 }}
+            contentOffset={{ x: 0, y: -64 }}
+            renderErrorPlaceholder={this.renderErrorPlaceholder}
+          />
+        </DrawerLayout>
+      </View>
     );
   }
 }

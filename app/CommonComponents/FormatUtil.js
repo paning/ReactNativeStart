@@ -39,3 +39,19 @@ export const formatDate = (date, format) => {
 
   return format.replace(/([a-z])(\1)*/ig, m => cfg[m]);
 };
+
+export const AnalysisTask = (task) => {
+  if (task.indexOf('sealapply') === 0) {
+    return 'sealapplys';
+  } else if (task.indexOf('carapply') === 0) {
+    return 'carapplys';
+  } else if (task.indexOf('meetingapply') === 0) {
+    return 'meetingapplys';
+  } else if (task.indexOf('recruitapply') === 0) {
+    return 'recruitapplys';
+  } else if (task.indexOf('employapply') === 0) {
+    return 'employapplys';
+  }
+
+  return '';
+};

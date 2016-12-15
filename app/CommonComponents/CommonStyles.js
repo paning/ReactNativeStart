@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 import Colors from './Colors';
 
-const paddingLeft = 10;
-
 const CommonStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -93,18 +91,30 @@ const CommonStyles = StyleSheet.create({
   sectionLine: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 10,
     borderColor: '#C8C7CC',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   sectionLineTitleText: {
-    padding: 10,
     color: '#000000',
   },
 
   sectionLineContentText: {
-    padding: 10,
     color: '#C7C7CC',
+  },
+
+  htmlText: {
+    padding: 8,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#EDECF1',
+    fontSize: 40,
   },
 });
 
