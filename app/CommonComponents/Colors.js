@@ -13,6 +13,7 @@ const colors = {
   blue: '#4078c0',
   checkedBorderColor: '#E2E2E2',
   uncheckedBorderColor: '#4078c0',
+  mainColor: '#625c38',
   mainBackGroundColor: '#F5F2E1',
   sectionLineIconColor: '#C7C7CC',
 };

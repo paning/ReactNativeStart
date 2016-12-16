@@ -155,9 +155,9 @@ const NavigationBarRouteMapper = {
           <TouchableOpacity onPress={route.pressSearch}>
             <Icon
               name={'ios-search'}
-              size={30}
+              size={25}
               style={{ paddingRight: 10, marginTop: 10 }}
-              color={Colors.blue}
+              color={Colors.backWhite}
             />
           </TouchableOpacity>
 

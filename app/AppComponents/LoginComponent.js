@@ -7,17 +7,25 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
 
+import Colors from '../CommonComponents/Colors';
 import KServices from '../NetworkService/KalixServices';
 
 const logo = require('../image/logo.png');
 
 const LoginStyles = StyleSheet.create({
-  loginview: {
+  mainView: {
     flex: 1,
+    flexDirection: 'column',
     padding: 30,
-    backgroundColor: '#f5f2e1',
+    backgroundColor: Colors.mainBackGroundColor,
+  },
+
+  imageView: {
+    marginBottom: 80,
+    alignItems: 'center',
   },
 
   TextInputView: {
@@ -27,24 +35,27 @@ const LoginStyles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 0.3,
     borderColor: '#000000',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 
   TextInput: {
+    flex: 1,
     backgroundColor: '#ffffff',
     height: 45,
-    margin: 18,
+    margin: 10,
   },
 
   loginText: {
     color: '#ffffff',
+    fontSize: 20,
     fontWeight: 'bold',
   },
   loginTextView: {
     marginTop: 10,
     height: 50,
-    backgroundColor: '#625c38',
+    backgroundColor: Colors.mainColor,
     borderRadius: 5,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -128,53 +139,50 @@ export default class LoginComponent extends Component {
 
   render() {
     return (
-      <View style={LoginStyles.loginview}>
-        <View
-          style={{ flexDirection: 'row', height: 100, marginTop: 1, justifyContent: 'center', alignItems: 'flex-start' }}
-        >
-          <Image source={logo} />
+      <View style={LoginStyles.mainView}>
+        <View style={LoginStyles.imageView}>
+          <Image source={logo} style={{ height: 150, width: 300 }} />
         </View>
 
-        <View
-          style={{ flexDirection: 'row', height: 100, marginTop: 1, justifyContent: 'center', alignItems: 'flex-start' }}
-        >
-          <Text>校园信息化管理系统</Text>
-        </View>
-
-        <View style={{ marginTop: 80 }}>
-          <View style={LoginStyles.TextInputView}>
-            <TextInput
-              style={LoginStyles.TextInput} underlineColorAndroid="transparent" placeholder="输入用户名/注册手机号"
-              value={this.state.userName}
-              onChangeText={(text) => {
-                this.setState({ userName: text });
-              }
-              }
-            />
-          </View>
-
-          <View style={LoginStyles.TextInputView}>
-            <TextInput
-              style={LoginStyles.TextInput} underlineColorAndroid="transparent" secureTextEntry placeholder="输入密码"
-              value={this.state.password}
-              onChangeText={(text) => {
-                this.setState({ password: text });
-              }
-              }
-            />
-          </View>
-
-          <Button
-            onPress={() => this.onPressLogin()}
-            raised
-            icon={{ name: 'cached' }}
-            title="登录"
-            buttonStyle={LoginStyles.loginTextView}
-            textStyle={LoginStyles.loginText}
+        <View style={LoginStyles.TextInputView}>
+          <Icon
+            name={'user'}
+            size={20}
+            style={{ paddingLeft: 10 }}
+            color={Colors.mainColor}
           />
-
-          <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
+          <TextInput
+            style={LoginStyles.TextInput} underlineColorAndroid="transparent" placeholder="输入用户名/注册手机号"
+            value={this.state.userName}
+            onChangeText={(text) => {
+              this.setState({ userName: text });
+            }
+              }
+          />
         </View>
+
+        <View style={LoginStyles.TextInputView}>
+          <Icon
+            name={'unlock-alt'}
+            size={20}
+            style={{ paddingLeft: 10 }}
+            color={Colors.mainColor}
+          />
+          <TextInput
+            style={LoginStyles.TextInput} underlineColorAndroid="transparent" secureTextEntry placeholder="输入密码"
+            value={this.state.password}
+            onChangeText={(text) => {
+              this.setState({ password: text });
+            }
+              }
+          />
+        </View>
+
+        <TouchableOpacity onPress={() => this.onPressLogin()} style={LoginStyles.loginTextView}>
+          <Text style={LoginStyles.loginText}>登录</Text>
+        </TouchableOpacity>
+
+        <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
       </View>
     );
   }
