@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,10 +6,12 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Button } from 'react-native-elements';
 
+import Globle from '../CommonComponents/Globle';
+import Storage from '../CommonComponents/Storage';
 import Colors from '../CommonComponents/Colors';
 import KServices from '../NetworkService/KalixServices';
 
@@ -72,11 +74,39 @@ export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: 'admin',
-      password: '123',
+      userName: '',
+      password: '',
       logining: false,
       loginError: null,
     };
+  }
+
+  componentDidMount() {
+    try {
+      AsyncStorage.getItem(
+        Globle.USER_NAME,
+        (error, result) => {
+          if (!error) {
+            this.setState({
+              userName: result,
+            });
+          }
+        },
+      );
+
+      AsyncStorage.getItem(
+        Globle.PASSWORD,
+        (error, result) => {
+          if (!error) {
+            this.setState({
+              password: result,
+            });
+          }
+        },
+      );
+    } catch (error) {
+      alert(`失败${error}`);
+    }
   }
 
   onPressLogin() {
@@ -99,6 +129,13 @@ export default class LoginComponent extends Component {
 
         if (responseText.indexOf('globle-custom.js') >= 0) {
           if (this.props.didLogin) {
+            try {
+              AsyncStorage.setItem(Globle.USER_NAME, this.state.userName);
+              AsyncStorage.setItem(Globle.PASSWORD, this.state.password);
+            } catch (error) {
+              // Error saving data
+            }
+
             this.props.didLogin();
           }
         } else {
@@ -106,6 +143,13 @@ export default class LoginComponent extends Component {
           if (!msg.success) {
             alert(msg.message);
           } else {
+            try {
+              AsyncStorage.setItem(Globle.USER_NAME, this.state.userName);
+              AsyncStorage.setItem(Globle.PASSWORD, this.state.password);
+            } catch (error) {
+              // Error saving data
+            }
+
             this.props.didLogin();
           }
         }
@@ -124,24 +168,11 @@ export default class LoginComponent extends Component {
       });
   }
 
-  onPressLogout() {
-    return fetch('http://localhost:8181/logout')
-      .then(response => response.text())
-      .then(() => {
-        if (this.props.didLogout) {
-          this.props.didLogout();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   render() {
     return (
       <View style={LoginStyles.mainView}>
         <View style={LoginStyles.imageView}>
-          <Image source={logo} style={{ height: 150, width: 300 }} />
+          <Image source={logo} style={{ height: 150, width: 300 }}/>
         </View>
 
         <View style={LoginStyles.TextInputView}>

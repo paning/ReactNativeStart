@@ -34,6 +34,10 @@ class KalixServices extends EventEmitter {
     );
   }
 
+  logout() {
+    SingleKalixServices.emit('didLogout');
+  }
+
   fetchPromise(url) {
     const fetchOptions = {
       method: 'get',
@@ -48,7 +52,6 @@ class KalixServices extends EventEmitter {
     );
   }
 }
-
 
 const SingleKalixServices = new KalixServices();
 

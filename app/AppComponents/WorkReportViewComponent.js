@@ -39,6 +39,8 @@ export default class WorkReportViewComponent extends Component {
   }
 
   render() {
+    const workType = this.translateWorkType();
+
     return (
       <ScrollView style={Styles.container}>
         <View>
@@ -53,7 +55,7 @@ export default class WorkReportViewComponent extends Component {
             </View>
             <View style={Styles.sectionLine}>
               <Text style={Styles.sectionLineTitleText}>汇报类型</Text>
-              <Text style={Styles.sectionLineContentText}>{() => this.translateWorkType()}</Text>
+              <Text style={Styles.sectionLineContentText}>{workType}</Text>
             </View>
             <View style={Styles.sectionLine}>
               <Text style={Styles.sectionLineTitleText}>汇报期间</Text>

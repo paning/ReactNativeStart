@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 
+import KServices from './app/NetworkService/KalixServices';
 import LoginComponent from './app/AppComponents/LoginComponent';
 import CommonComponents from './app/CommonComponents/CommonComponents';
 import RootTab from './app/AppComponents/RootTabComponent.android';
@@ -30,11 +31,11 @@ export default class ReactNativeStart extends Component {
     this.setState({
       userState: LoginState.login,
     });
-  }
 
-  didLogout() {
-    this.setState({
-      userState: LoginState.logout,
+    KServices.addListener('didLogout', () => {
+      this.setState({
+        userState: LoginState.logout,
+      });
     });
   }
 
@@ -46,11 +47,11 @@ export default class ReactNativeStart extends Component {
       }
         break;
       case LoginState.login: {
-        cp = <RootTab />;
+        cp = <RootTab didLogout={() => this.didLogout()} />;
       }
         break;
       case LoginState.logout: {
-        cp = <LoginComponent didLogin={() => this.didLogin()} didLogout={() => this.didLogout()} />;
+        cp = <LoginComponent didLogin={() => this.didLogin()} />;
       }
         break;
 

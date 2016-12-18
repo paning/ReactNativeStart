@@ -24,10 +24,9 @@ export default function RootTab() {
         renderTabBar={() => <TabBar />}
         tabBarPosition={'bottom'}
       >
-        {Routes.navigator('test')}
         {Routes.navigator('oa')}
         {Routes.navigator('workreport')}
-        {Routes.navigator('me')}
+        {Routes.navigator('setting')}
       </ScrollableTabView>
     </View>
   );

@@ -96,6 +96,11 @@ const CommonStyles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
+  sectionLineRightView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   sectionLineTitleText: {
     color: '#000000',
   },
