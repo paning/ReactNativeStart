@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout';
 
-import KService from '../../NetworkService/KalixServices';
+import KServices from '../../NetworkService/KalixServices';
 import TaskCell from './TaskCell';
 import RefreshListView from '../RefreshListView';
 import Colors from '../../CommonComponents/Colors';
 import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
 import Styles from '../../CommonComponents/CommonStyles';
-import {formatDate} from '../../CommonComponents/FormatUtil';
+import { formatDate } from '../../CommonComponents/FormatUtil';
 
 const styles = StyleSheet.create({
   container: {
@@ -155,6 +155,13 @@ export default class TaskComponent extends Component {
     this.props.route.pressSearch = this.onPressSearch.bind(this);
   }
 
+  componentDidMount() {
+    const that = this;
+    KServices.addListener('TaskReload', () => {
+      that.listView.reloadData();
+    });
+  }
+
   onPressSearch() {
     this.drawer.openDrawer();
   }
@@ -198,7 +205,7 @@ export default class TaskComponent extends Component {
   reloadPath() {
     const jsonstr = {};
 
-    const path = `${KService.restPath()}/workflow/tasks?jsonstr=${JSON.stringify(jsonstr)}`;
+    const path = `${KServices.restPath()}/workflow/tasks?jsonstr=${JSON.stringify(jsonstr)}`;
     return encodeURI(path);
   }
 
@@ -206,7 +213,7 @@ export default class TaskComponent extends Component {
   async showPicker(stateKey, options) {
     try {
       const newState = {};
-      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      const { action, year, month, day } = await DatePickerAndroid.open(options);
       if (action === DatePickerAndroid.dismissedAction) {
         // newState[stateKey + 'Text'] = 'dismissed';
       } else {
@@ -215,7 +222,7 @@ export default class TaskComponent extends Component {
         newState[`${stateKey}Date`] = date;
       }
       this.setState(newState);
-    } catch ({code, message}) {
+    } catch ({ code, message }) {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   }
@@ -283,7 +290,7 @@ export default class TaskComponent extends Component {
 
   renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <TaskCell key={rowID} cell={rowData} navigator={this.props.navigator}/>
+      <TaskCell key={rowID} cell={rowData} navigator={this.props.navigator} />
     );
   }
 

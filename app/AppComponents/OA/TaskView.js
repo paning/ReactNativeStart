@@ -108,7 +108,8 @@ export default class TaskView extends Component {
         .then((responseText) => {
           const json = JSON.parse(responseText);
           if (json.success) {
-            alert(json.msg);
+            KServices.emit('TaskReload');
+            that.props.navigator.pop();
           } else {
             alert(json.msg);
           }

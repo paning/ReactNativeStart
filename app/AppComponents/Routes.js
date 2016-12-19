@@ -25,11 +25,10 @@ import OA from './OA/main';
 import TaskComponent from './OA/TaskComponent';
 import TaskView from './OA/TaskView';
 import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
-import MyProcessHistoryView from './OA/MyProcessHistoryView';
+import MyProcessHistoryView from './OA/MyProcessHistoryView'
 
-import SettingComponent from './SettingComponent';
-import LoginComponent from './LoginComponent';
 import Colors from '../CommonComponents/Colors';
+import LoginComponent from './LoginComponent';
 import NavigatorNavigationBarStyle from './GHNavigatorBarStyle.android';
 
 const ScreenWidth = Dimensions.get('window').width;
@@ -218,7 +217,7 @@ const NavigationBarRouteMapper = {
         title = '公务用车申请';
         break;
       case 'task':
-        title = '待办流程';
+        title = '代办流程';
         break;
       case 'taskView':
         title = route.model.businessNo;
@@ -229,8 +228,50 @@ const NavigationBarRouteMapper = {
       case 'myProcessHistoryView':
         title = route.model.name;
         break;
-      case 'setting':
-        title = '设置';
+      case 'repo':
+        title = route.obj.name;
+        break;
+      case 'user':
+        title = route.obj.login;
+        break;
+      case 'web':
+        title = route.obj.title;
+        break;
+      case 'userList':
+        title = route.obj.title;
+        break;
+      case 'login':
+        title = route.title;
+        break;
+      case 'org':
+        title = 'org';
+        break;
+      case 'me':
+        title = 'Me';
+        break;
+      case 'watching':
+        title = 'Watching';
+        break;
+      case 'settings':
+        title = 'Settings';
+        break;
+      case 'repos':
+        title = route.obj.title;
+        break;
+      case 'explore':
+        title = 'Popular Repos';
+        break;
+      case 'search':
+        title = 'search';
+        break;
+      case 'showcase':
+        title = route.obj.name;
+        break;
+      case 'trend':
+        title = 'Popular Users';
+        break;
+      case 'editprofile':
+        title = 'Edit Profile';
         break;
       default:
     }
@@ -287,8 +328,8 @@ const routes = {
       case 'trend':
         tab = { tabName: '用户管理', iconName: 'ios-people' };
         break;
-      case 'setting':
-        tab = { tabName: '设置', iconName: 'ios-person' };
+      case 'me':
+        tab = { tabName: '个人设置', iconName: 'ios-person' };
         break;
       default:
     }
@@ -330,14 +371,6 @@ const routes = {
       case 'myProcessHistoryView':
         return (
           <MyProcessHistoryView
-            navigator={navigator}
-            model={route.model}
-            style={{ flex: 1 }}
-          />
-        );
-      case 'setting':
-        return (
-          <SettingComponent
             navigator={navigator}
             model={route.model}
             style={{ flex: 1 }}
