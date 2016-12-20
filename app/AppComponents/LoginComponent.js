@@ -213,7 +213,7 @@ export default class LoginComponent extends Component {
           <Text style={LoginStyles.loginText}>登录</Text>
         </TouchableOpacity>
 
-        <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} onPress={() => this.onPressLogout()}>忘记密码？</Text>
+        <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} >忘记密码？</Text>
       </View>
     );
   }
