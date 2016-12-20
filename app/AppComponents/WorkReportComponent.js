@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -9,16 +9,18 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   DatePickerAndroid,
+  ScrollView,
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout';
 
+import Section from './Section';
 import KService from '../NetworkService/KalixServices';
 import WorkReportCell from './WorkReportCell';
 import RefreshListView from './RefreshListView';
 import Colors from '../CommonComponents/Colors';
 import Styles from '../CommonComponents/CommonStyles';
 import ErrorPlaceholder from '../CommonComponents/ErrorPlacehoderComponent';
-import { formatDate } from '../CommonComponents/FormatUtil';
+import {formatDate} from '../CommonComponents/FormatUtil';
 
 const styles = StyleSheet.create({
   container: {
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   drawerTitleContainer: {
-    height: 120,
+    height: 60,
     justifyContent: 'flex-end',
     padding: 20,
     backgroundColor: '#3e9ce9',
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   drawerSearchItemContainer: {
-    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF',
   },
@@ -109,28 +110,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 
-  checkedBorder: {
-    margin: 5,
-    marginBottom: 10,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    borderRadius: 4,
-    borderColor: Colors.blue,
-  },
-  uncheckedBorder: {
-    margin: 5,
-    marginBottom: 10,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    borderRadius: 4,
-    borderColor: Colors.backGray,
-  },
   nameAndPwd: {
     fontSize: 12,
     // fontWeight: 'bold',
@@ -226,7 +205,7 @@ export default class WorkReportComponent extends Component {
   async showPicker(stateKey, options) {
     try {
       const newState = {};
-      const { action, year, month, day } = await DatePickerAndroid.open(options);
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
       if (action === DatePickerAndroid.dismissedAction) {
         // newState[stateKey + 'Text'] = 'dismissed';
       } else {
@@ -235,7 +214,7 @@ export default class WorkReportComponent extends Component {
         newState[`${stateKey}Date`] = date;
       }
       this.setState(newState);
-    } catch ({ code, message }) {
+    } catch ({code, message}) {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   }
@@ -303,75 +282,83 @@ export default class WorkReportComponent extends Component {
 
   renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <WorkReportCell key={rowID} cell={rowData} navigator={this.props.navigator} />
+      <WorkReportCell key={rowID} cell={rowData} navigator={this.props.navigator}/>
     );
   }
 
   renderNavigationView() {
     return (
-      <View style={[styles.drawerContainer, { backgroundColor: '#fcfcfc' }]}>
-        <View style={styles.drawerTitleContainer} >
-          <Text style={styles.drawerTitle}>
-            筛选
-          </Text>
-        </View>
-        <View style={styles.drawerSearchContainer}>
-          <View style={styles.drawerSearchItemContainer}>
+      <View style={Styles.containerNoMargin}>
+        <ScrollView>
+          <Section>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={{ padding: 10 }}>汇报类型</Text>
               <Text style={{ padding: 10 }}>{this.state.workTypeName}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <View style={Styles.searchSingleSelectView}>
               <TouchableHighlight
-                style={this.state.workType === 0 ? styles.checkedBorder : styles.uncheckedBorder}
+                style={this.state.workType === 0 ? Styles.searchSingleSelectChecked : Styles.searchSingleSelectUnChecked}
                 onPress={() => this.onPress(0)}
                 underlayColor={Colors.backGray}
               >
-                <Text style={[styles.nameAndPwd, { textAlign: 'center' }]}>
-                    日报
-                  </Text>
+                <Text style={Styles.searchSingleSelectText}>
+                  日报
+                </Text>
               </TouchableHighlight>
               <TouchableHighlight
-                style={this.state.workType === 1 ? styles.checkedBorder : styles.uncheckedBorder}
+                style={this.state.workType === 1 ? Styles.searchSingleSelectChecked : Styles.searchSingleSelectUnChecked}
                 onPress={() => this.onPress(1)}
                 underlayColor={Colors.backGray}
               >
-                <Text style={[styles.nameAndPwd, { textAlign: 'center' }]}>
-                    周报
-                  </Text>
+                <Text style={Styles.searchSingleSelectText}>
+                  周报
+                </Text>
               </TouchableHighlight>
               <TouchableHighlight
-                style={this.state.workType === 2 ? styles.checkedBorder : styles.uncheckedBorder}
+                style={this.state.workType === 2 ? Styles.searchSingleSelectChecked : Styles.searchSingleSelectUnChecked}
                 onPress={() => this.onPress(2)}
                 underlayColor={Colors.backGray}
               >
-                <Text style={[styles.nameAndPwd, { textAlign: 'center' }]}>
-                    月报
-                  </Text>
+                <Text style={Styles.searchSingleSelectText}>
+                  月报
+                </Text>
               </TouchableHighlight>
             </View>
+          </Section>
+          <Section>
             <View style={styles.drawerSearchItemContainer}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <TouchableHighlight onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })} underlayColor={Colors.backGray}>
+                <TouchableHighlight
+                  onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })}
+                  underlayColor={Colors.backGray}>
                   <Text style={{ padding: 10 }}>日期</Text>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })} underlayColor={Colors.backGray}>
+                <TouchableHighlight
+                  onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })}
+                  underlayColor={Colors.backGray}>
                   <Text style={{ padding: 10 }}>{this.state.simpleText}</Text>
                 </TouchableHighlight>
               </View>
             </View>
-          </View>
-        </View>
-        <View style={{ padding: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableHighlight onPress={() => this.drawerConfirm()} underlayColor={Colors.backGray}>
-            <Text>确认</Text>
+          </Section>
+
+
+        </ScrollView>
+        <View style={Styles.searchButtonView}>
+          <TouchableHighlight
+            style={{ flex: 1, alignItems: 'stretch' }}
+            onPress={() => this.drawerReset()}
+            underlayColor={Colors.backGray}
+          >
+            <Text style={Styles.searchResetButton}>重置</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.drawerReset()} underlayColor={Colors.backGray}>
-            <Text>重置</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.drawerCancel()} underlayColor={Colors.backGray}>
-            <Text>取消</Text>
+          <TouchableHighlight
+            style={{ flex: 1, alignItems: 'stretch' }}
+            onPress={() => this.drawerConfirm()}
+            underlayColor={Colors.backGray}
+          >
+            <Text style={Styles.searchConfirmButton}>确认</Text>
           </TouchableHighlight>
         </View>
       </View>

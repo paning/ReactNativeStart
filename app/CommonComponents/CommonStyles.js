@@ -8,6 +8,11 @@ const CommonStyles = StyleSheet.create({
     marginTop: 44,
   },
 
+  containerNoMargin: {
+    flex: 1,
+    backgroundColor: Colors.mainBackGroundColor,
+  },
+
   shadowLine: {
     shadowColor: '#999999',
     shadowOpacity: 0.8,
@@ -120,6 +125,59 @@ const CommonStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#EDECF1',
     fontSize: 40,
+  },
+
+  searchSingleSelectView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  searchSingleSelectChecked: {
+    width: 60,
+    height: 30,
+    margin: 10,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: Colors.red,
+  },
+  searchSingleSelectUnChecked: {
+    width: 60,
+    height: 30,
+    margin: 10,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: Colors.blue,
+  },
+  searchSingleSelectText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'black',
+  },
+  searchButtonView: {
+    backgroundColor: Colors.green,
+    height: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  searchConfirmButton: {
+    flex: 1,
+    backgroundColor: Colors.red,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 14,
+    color: 'white',
+  },
+  searchResetButton: {
+    flex: 1,
+    backgroundColor: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 14,
+    color: 'black',
   },
 });
 
