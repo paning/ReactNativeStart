@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   ListView,
   View,
@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     marginBottom: 10,
   },
-  listGroup: {
-  },
+  listGroup: {},
   listItem: {
     flex: 1,
     flexDirection: 'row',
@@ -140,7 +139,7 @@ export default class RefreshListView extends Component {
     this.dataSource = [];
     this.totalCount = 0;
     this.page = 1;
-    this.limit = 10;
+    this.limit = 15;
     this.maxPage = -1;
     this.loading = false;
     this.loaded = false;
@@ -156,7 +155,7 @@ export default class RefreshListView extends Component {
     this.state = {
       dataSource: new ListView.DataSource(dataSourceParam),
       loaded: true,
-      lastError: { isReloadError: false, error: null },
+      lastError: {isReloadError: false, error: null},
       isRefreshing: false,
     };
   }
@@ -189,7 +188,7 @@ export default class RefreshListView extends Component {
     this.dataSource = [];
     this.setNeedsRenderList([]);
     this.page = 1;
-    this.limit = 10;
+    this.limit = 15;
     this.totalCount = 0;
     this.maxPage = 1;
     this.loading = false;
@@ -217,7 +216,7 @@ export default class RefreshListView extends Component {
 
     this.loading = true;
     this.setState({
-      lastError: { isReloadError: false, error: null },
+      lastError: {isReloadError: false, error: null},
       loaded: this.state.dataSource.getRowCount() > 0,
       isRefreshing: true,
     });
@@ -226,11 +225,17 @@ export default class RefreshListView extends Component {
 
     path = this.pageString(path);
     const reloadPromise = KServices.fetchPromise(path);
+
     reloadPromise
-      .then((value) => {
-        return value.text();
-      })
+      .then(value =>
+        value.text(),
+      )
       .then((responseText) => {
+        if (responseText.indexOf('globle-custom.js') >= 0) {
+          KServices.logout();
+          return;
+        }
+
         const json = JSON.parse(responseText);
         that.totalCount = json.totalCount;
         that.computePage();
@@ -279,11 +284,17 @@ export default class RefreshListView extends Component {
     path = this.pageString(path);
     console.log('appendPage path', path);
     const appendPromise = KServices.fetchPromise(path);
+
     appendPromise
       .then(value =>
-         value.text(),
+        value.text(),
       )
       .then((responseText) => {
+        if (responseText.indexOf('globle-custom.js') >= 0) {
+          KServices.logout();
+          return;
+        }
+
         const t = JSON.parse(responseText);
         const rdata = t.data;
         const ds = JSON.parse(JSON.stringify(rdata)); // clone datasorce, force renderRow update
@@ -295,18 +306,19 @@ export default class RefreshListView extends Component {
           loaded: true,
         });
       })
-     .catch((err) => {
-       alert(err);// that.showError(err);
+      .catch((err) => {
+        alert(err);// that.showError(err);
 
-       const pError = {
-         loaded: true,
-         lastError: { isReloadError: false, error: err },
-       };
-       that.setState(pError);
-       that.page = that.page - 1;
+        const pError = {
+          loaded: true,
+          lastError: {isReloadError: false, error: err},
+        };
+        that.setState(pError);
+        that.page = that.page - 1;
 
-       that.props.handleError && that.props.handleError(pError);
-     });
+        that.props.handleError && that.props.handleError(pError);
+      });
+
   }
 
   setNeedsRenderList(rdata) {
@@ -340,15 +352,15 @@ export default class RefreshListView extends Component {
 
     if (Platform.OS === 'android') {
       return (
-          <ListView
-            style={styles.listGroup}
-            dataSource={this.state.dataSource}
-            enableEmptySections={true}
-            renderRow={this.props.renderRow.bind(this)}
-            onEndReached={() => this.appendPage()}
-            renderFooter={() => this.renderFooter()}
-            scrollRenderAheadDistance={50}
-          />
+        <ListView
+          style={styles.listGroup}
+          dataSource={this.state.dataSource}
+          enableEmptySections
+          renderRow={this.props.renderRow.bind(this)}
+          onEndReached={() => this.appendPage()}
+          renderFooter={() => this.renderFooter()}
+          scrollRenderAheadDistance={50}
+        />
       );
     } else if (Platform.OS === 'ios') {
       return (
@@ -376,7 +388,7 @@ export default class RefreshListView extends Component {
     if (this.maxPage > this.page && !lastError.error) {
       return (
         <View style={styles.appendLoading}>
-          <ActivityIndicator styleAttr="Small" />
+          <ActivityIndicator styleAttr="Small"/>
         </View>
       );
     }

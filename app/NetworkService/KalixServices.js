@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import {EventEmitter} from 'events';
 
 // const SERVER_PATH = 'http://info.sokylin.com.cn';
 const SERVER_PATH = 'http://localhost:8181';
