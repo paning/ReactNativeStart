@@ -26,7 +26,7 @@ import TaskComponent from './OA/TaskComponent';
 import TaskView from './OA/TaskView';
 import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
 import MyProcessHistoryView from './OA/MyProcessHistoryView'
-
+import Setting from './SettingComponent';
 import Colors from '../CommonComponents/Colors';
 import LoginComponent from './LoginComponent';
 import NavigatorNavigationBarStyle from './GHNavigatorBarStyle.android';
@@ -325,11 +325,8 @@ const routes = {
       case 'oa':
         tab = { tabName: '办公', iconName: 'ios-flame' };
         break;
-      case 'trend':
-        tab = { tabName: '用户管理', iconName: 'ios-people' };
-        break;
-      case 'me':
-        tab = { tabName: '个人设置', iconName: 'ios-person' };
+      case 'setting':
+        tab = { tabName: '设置', iconName: 'ios-person' };
         break;
       default:
     }
@@ -376,6 +373,8 @@ const routes = {
             style={{ flex: 1 }}
           />
         );
+      case 'setting':
+        return <Setting navigator={navigator} model={route} style={{ flex: 1 }} />;
       case 'login':
         return (
           <LoginComponent
