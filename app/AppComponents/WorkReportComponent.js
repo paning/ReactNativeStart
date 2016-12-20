@@ -371,7 +371,7 @@ export default class WorkReportComponent extends Component {
       marginTop = 0;
     }
 
-    const drawerWidth = (Dimensions.get('window').width / 5) * 3;
+    const drawerWidth = (Dimensions.get('window').width / 5) * 4;
     return (
       <View style={Styles.container}>
         <DrawerLayout
