@@ -55,74 +55,6 @@ export default class OA extends Component {
       <View style={styles.mainView}>
         <Section style={styles.group}>
           <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('mainwork')}>
-              <Icon
-                name={'random'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>流程申请</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('recruitapply')}>
-              <Icon
-                name={'user'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>用工申请</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('employapply')}>
-              <Icon
-                name={'user-plus'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>入职申请</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('meetingapply')}>
-              <Icon
-                name={'building'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>会议室申请</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('sealapply')}>
-              <Icon
-                name={'ge'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>印章使用申请</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.item} onPress={() => this.onPress('carapply')}>
-              <Icon
-                name={'car'}
-                size={30}
-                style={{ paddingRight: 10, marginTop: 10 }}
-                color={Colors.blue}
-              />
-              <Text>公务用车申请</Text>
-            </TouchableOpacity>
-          </View>
-        </Section>
-        <Section style={styles.group}>
-          <View>
             <TouchableOpacity style={styles.item} onPress={() => this.onPress('task')}>
               <Icon
                 name={'tasks'}
@@ -130,7 +62,7 @@ export default class OA extends Component {
                 style={{ paddingRight: 10, marginTop: 10 }}
                 color={Colors.blue}
               />
-              <Text>代办流程</Text>
+              <Text>待办流程</Text>
             </TouchableOpacity>
           </View>
           <View>
@@ -142,6 +74,17 @@ export default class OA extends Component {
                 color={Colors.blue}
               />
               <Text>我的流程</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.item} onPress={() => this.onPress('myinvolvehistory')}>
+              <Icon
+                name={'building'}
+                size={30}
+                style={{ paddingRight: 10, marginTop: 10 }}
+                color={Colors.blue}
+              />
+              <Text>我参与的流程</Text>
             </TouchableOpacity>
           </View>
         </Section>

@@ -12,13 +12,12 @@ import {
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout';
 
-import KServices from '../../NetworkService/KalixServices';
-import TaskCell from './TaskCell';
+import KService from '../../NetworkService/KalixServices';
+import MyProcessHistoryCell from './MyProcessHistoryCell';
 import RefreshListView from '../RefreshListView';
 import Colors from '../../CommonComponents/Colors';
-import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
 import Styles from '../../CommonComponents/CommonStyles';
-import { formatDate } from '../../CommonComponents/FormatUtil';
+import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TaskComponent extends Component {
+export default class MyInvolveHistoryComponent extends Component {
   static propTypes = {
     navigator: React.PropTypes.object,
     route: React.PropTypes.object,
@@ -153,11 +152,6 @@ export default class TaskComponent extends Component {
 
   componentWillMount() {
     this.props.route.pressSearch = this.onPressSearch.bind(this);
-    this.reloadData = this.reloadData.bind(this);
-  }
-
-  componentDidMount() {
-    KServices.addListener('TaskReload', this.reloadData);
   }
 
   onPressSearch() {
@@ -200,18 +194,10 @@ export default class TaskComponent extends Component {
     }
   }
 
-  reloadData() {
-    this.listView.reloadData();
-  }
-
-  componentWillUnmount() {
-    KServices.removeListener('TaskReload', this.reloadData);
-  }
-
   reloadPath() {
     const jsonstr = {};
 
-    const path = `${KServices.restPath()}/workflow/tasks?jsonstr=${JSON.stringify(jsonstr)}`;
+    const path = `${KService.restPath()}/workflow/myInvolvedHistory?jsonstr=${JSON.stringify(jsonstr)}`;
     return encodeURI(path);
   }
 
@@ -296,14 +282,14 @@ export default class TaskComponent extends Component {
 
   renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <TaskCell key={rowID} cell={rowData} navigator={this.props.navigator} />
+      <MyProcessHistoryCell key={rowID} cell={rowData} navigator={this.props.navigator} />
     );
   }
 
   renderNavigationView() {
     return (
       <View style={[styles.drawerContainer, { backgroundColor: '#fcfcfc' }]}>
-        <View style={styles.drawerTitleContainer}>
+        <View style={styles.drawerTitleContainer} >
           <Text style={styles.drawerTitle}>
             筛选
           </Text>
@@ -324,7 +310,7 @@ export default class TaskComponent extends Component {
   }
 
   render() {
-    let marginTop = 44;
+    let marginTop = 100;
     if (Platform.OS === 'ios') {
       marginTop = 0;
     }
@@ -340,13 +326,11 @@ export default class TaskComponent extends Component {
         >
           <RefreshListView
             ref={(ref) => { this.listView = ref; }}
-            style={{ flex: 1, marginTop }}
             enablePullToRefresh
             renderRow={this.renderRow}
             reloadPromisePath={() => this.reloadPath()}
-            handleReloadData={TaskComponent.handleReloadData}
+            handleReloadData={MyInvolveHistoryComponent.handleReloadData}
             navigator={this.props.navigator}
-            maxPage={5}
             contentInset={{ top: 64, left: 0, bottom: 49, right: 0 }}
             contentOffset={{ x: 0, y: -64 }}
             renderErrorPlaceholder={this.renderErrorPlaceholder}

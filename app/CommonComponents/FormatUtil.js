@@ -51,6 +51,10 @@ export const AnalysisTask = (task) => {
     return 'recruitapplys';
   } else if (task.indexOf('employapply') === 0) {
     return 'employapplys';
+  } else if (task.indexOf('evectionapply') === 0) {
+    return 'evectionapplys';
+  } else if (task.indexOf('reimbursementapply') === 0) {
+    return 'reimbursementapplys';
   }
 
   return '';

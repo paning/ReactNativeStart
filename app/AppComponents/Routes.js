@@ -25,7 +25,8 @@ import OA from './OA/main';
 import TaskComponent from './OA/TaskComponent';
 import TaskView from './OA/TaskView';
 import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
-import MyProcessHistoryView from './OA/MyProcessHistoryView'
+import MyInvolveHistoryComponent from './OA/MyInvolveHistoryComponent';
+import MyProcessHistoryView from './OA/MyProcessHistoryView';
 import Setting from './SettingComponent';
 import Colors from '../CommonComponents/Colors';
 import LoginComponent from './LoginComponent';
@@ -69,11 +70,14 @@ const styles = StyleSheet.create({
   navBarLeftButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 10,
+    paddingLeft: 15,
     height: 40,
   },
   navBarRightButton: {
-    paddingRight: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 15,
+    height: 40,
   },
   navBarButtonText: {
     // color: cssVar('fbui-accent-blue'),
@@ -130,7 +134,7 @@ const NavigationBarRouteMapper = {
       >
         <Icon
           name="ios-arrow-back"
-          size={35}
+          size={40}
           color={Colors.backWhite}
         />
       </TouchableOpacity>
@@ -152,11 +156,13 @@ const NavigationBarRouteMapper = {
         break;
       case 'workreport':
         rightButton = (
-          <TouchableOpacity onPress={route.pressSearch}>
+          <TouchableOpacity
+            style={styles.navBarRightButton}
+            onPress={route.pressSearch}
+          >
             <Icon
               name={'ios-search'}
-              size={25}
-              style={{ paddingRight: 10, marginTop: 10 }}
+              size={30}
               color={Colors.backWhite}
             />
           </TouchableOpacity>
@@ -217,13 +223,16 @@ const NavigationBarRouteMapper = {
         title = '公务用车申请';
         break;
       case 'task':
-        title = '代办流程';
+        title = '待办流程';
         break;
       case 'taskView':
         title = route.model.businessNo;
         break;
       case 'myprocesshistory':
         title = '我的流程';
+        break;
+      case 'myprocesshistory':
+        title = '我参与的流程';
         break;
       case 'myProcessHistoryView':
         title = route.model.name;
@@ -370,6 +379,14 @@ const routes = {
           <MyProcessHistoryView
             navigator={navigator}
             model={route.model}
+            style={{ flex: 1 }}
+          />
+        );
+      case 'myinvolvehistory':
+        return (
+          <MyInvolveHistoryComponent
+            navigator={navigator}
+            route={route}
             style={{ flex: 1 }}
           />
         );

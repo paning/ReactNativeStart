@@ -93,6 +93,11 @@ export default class TaskView extends Component {
     };
   }
 
+  test(result) {
+    KServices.emit('TaskReload');
+    this.props.navigator.pop();
+  }
+
   auditOnPress(result) {
     const that = this;
     const taskPath = TaskView.analysisTask(this.props.model.businessKey);
@@ -169,7 +174,7 @@ export default class TaskView extends Component {
           <TouchableOpacity onPress={() => this.auditOnPress('同意')} style={styles.buttonView}>
             <Text style={styles.buttonText}>同意</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.auditOnPress('不同意')} style={styles.buttonView}>
+          <TouchableOpacity onPress={() => this.test('不同意')} style={styles.buttonView}>
             <Text style={styles.buttonText}>不同意</Text>
           </TouchableOpacity>
         </View>

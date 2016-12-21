@@ -15,6 +15,8 @@ const EmployImage = require('../../image/employapplys.png');
 const MeetingImage = require('../../image/meetingapplys.png');
 const RecruitImage = require('../../image/recruitapplys.png');
 const SealImage = require('../../image/sealapplys.png');
+const ReimbursementImage = require('../../image/evectionapplys.png');
+const evectionImage = require('../../image/sealapplys.png');
 
 export default class MyProcessHistoryCell extends Component {
   static propTypes = {
@@ -45,6 +47,12 @@ export default class MyProcessHistoryCell extends Component {
         break;
       case 'employapplys':
         imageUrl = EmployImage;
+        break;
+      case 'reimbursementapplys':
+        imageUrl = ReimbursementImage;
+        break;
+      case 'evectionapplys':
+        imageUrl = evectionImage;
         break;
       default:
         break;

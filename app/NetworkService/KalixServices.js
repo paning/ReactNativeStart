@@ -1,7 +1,8 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 
 // const SERVER_PATH = 'http://info.sokylin.com.cn';
-const SERVER_PATH = 'http://localhost:8181';
+const SERVER_PATH = 'http://192.168.137.1:8181';
+// const SERVER_PATH = 'http://localhost:8181';
 const REST_PATH = '/camel/rest';
 const LOGIN_PATH = `${SERVER_PATH}/login.jsp`;
 
@@ -34,7 +35,21 @@ class KalixServices extends EventEmitter {
     );
   }
 
+  loginRequest(username, password) {
+    const fetchOptions = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${username}&password=${password}`,
+    };
+
+    return (
+      fetch(LOGIN_PATH, fetchOptions)
+    );
+  }
   logout() {
+    SingleKalixServices.fetchPromise(`${SERVER_PATH}/logout`);
     SingleKalixServices.emit('didLogout');
   }
 
