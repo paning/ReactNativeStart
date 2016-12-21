@@ -228,8 +228,8 @@ const NavigationBarRouteMapper = {
       case 'myProcessHistoryView':
         title = route.model.name;
         break;
-      case 'repo':
-        title = route.obj.name;
+      case 'setting':
+        title = '设置';
         break;
       case 'user':
         title = route.obj.login;
