@@ -12,9 +12,13 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import TestListView from './TestListView';
-import WorkReportComponent from './WorkReportComponent';
-import WorkReportViewComponent from './WorkReportViewComponent';
+
 import OA from './OA/main';
+import TaskComponent from './OA/TaskComponent';
+import TaskView from './OA/TaskView';
+import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
+import MyInvolveHistoryComponent from './OA/MyInvolveHistoryComponent';
+import MyProcessHistoryView from './OA/MyProcessHistoryView';
 // import CarApplyComponent from './OA/CarApplyComponent';
 // import RecruitApplyComponent from './OA/RecruitApplyComponent';
 // import EmployApplyComponent from './OA/EmployApplyComponent';
@@ -22,11 +26,13 @@ import OA from './OA/main';
 // import SealApplyComponent from './OA/SealApplyComponent';
 // import MainWorkComponent from './OA/MainWorkComponent';
 //
-import TaskComponent from './OA/TaskComponent';
-import TaskView from './OA/TaskView';
-import MyProcessHistoryComponent from './OA/MyProcessHistoryComponent';
-import MyInvolveHistoryComponent from './OA/MyInvolveHistoryComponent';
-import MyProcessHistoryView from './OA/MyProcessHistoryView';
+
+import Schedule from './Schedule/main';
+import WorkReportComponent from './Schedule/WorkReportComponent';
+import WorkReportViewComponent from './Schedule/WorkReportViewComponent';
+import AssignmentComponent from './Schedule/AssignmentComponent';
+import AssignmentViewComponent from './Schedule/AssignmentViewComponent';
+
 import Setting from './SettingComponent';
 import Colors from '../CommonComponents/Colors';
 import LoginComponent from './LoginComponent';
@@ -72,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 15,
     height: 40,
+    width: 100,
   },
   navBarRightButton: {
     flexDirection: 'row',
@@ -195,12 +202,6 @@ const NavigationBarRouteMapper = {
   Title(route, navigator, index, navState) {
     let title;
     switch (route.id) {
-      case 'workreport':
-        title = '工作汇报';
-        break;
-      case 'workreportView':
-        title = route.obj.title;
-        break;
       case 'oa':
         title = '办公自动化';
         break;
@@ -231,56 +232,32 @@ const NavigationBarRouteMapper = {
       case 'myprocesshistory':
         title = '我的流程';
         break;
-      case 'myprocesshistory':
+      case 'myinvolvehistory':
         title = '我参与的流程';
         break;
       case 'myProcessHistoryView':
         title = route.model.name;
         break;
+      case 'schedule':
+        title = '计划任务';
+        break;
+      case 'workreport':
+        title = '工作汇报';
+        break;
+      case 'workreportView':
+        title = route.obj.title;
+        break;
+      case 'assignment':
+        title = '任务管理';
+        break;
+      case 'assignmentView':
+        title = route.obj.title;
+        break;
       case 'setting':
         title = '设置';
         break;
-      case 'user':
-        title = route.obj.login;
-        break;
-      case 'web':
-        title = route.obj.title;
-        break;
-      case 'userList':
-        title = route.obj.title;
-        break;
       case 'login':
         title = route.title;
-        break;
-      case 'org':
-        title = 'org';
-        break;
-      case 'me':
-        title = 'Me';
-        break;
-      case 'watching':
-        title = 'Watching';
-        break;
-      case 'settings':
-        title = 'Settings';
-        break;
-      case 'repos':
-        title = route.obj.title;
-        break;
-      case 'explore':
-        title = 'Popular Repos';
-        break;
-      case 'search':
-        title = 'search';
-        break;
-      case 'showcase':
-        title = route.obj.name;
-        break;
-      case 'trend':
-        title = 'Popular Users';
-        break;
-      case 'editprofile':
-        title = 'Edit Profile';
         break;
       default:
     }
@@ -325,14 +302,14 @@ const routes = {
   tabObjForRoute(routeName) {
     let tab = { tabName: 'Feed', iconName: 'ios-home' };
     switch (routeName) {
-      case 'workreport':
-        tab = { tabName: '工作汇报', iconName: 'ios-home' };
-        break;
       case 'test':
         tab = { tabName: '工作计划', iconName: 'ios-home' };
         break;
       case 'oa':
         tab = { tabName: '办公', iconName: 'ios-flame' };
+        break;
+      case 'schedule':
+        tab = { tabName: '计划任务', iconName: 'ios-home' };
         break;
       case 'setting':
         tab = { tabName: '设置', iconName: 'ios-person' };
@@ -354,10 +331,6 @@ const routes = {
     });
 
     switch (route.id) {
-      case 'workreport':
-        return <WorkReportComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
-      case 'workreportView':
-        return <WorkReportViewComponent navigator={navigator} model={route.obj} />;
       case 'test':
         return <TestListView navigator={navigator} route={route} />;
       case 'oa':
@@ -390,6 +363,16 @@ const routes = {
             style={{ flex: 1 }}
           />
         );
+      case 'schedule':
+        return <Schedule navigator={navigator} route={route} style={{ flex: 1 }} />;
+      case 'workreport':
+        return <WorkReportComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
+      case 'workreportView':
+        return <WorkReportViewComponent navigator={navigator} model={route.obj} />;
+      case 'assignment':
+        return <AssignmentComponent navigator={navigator} route={route} style={{ flex: 1 }} />;
+      case 'assignmentView':
+        return <AssignmentViewComponent navigator={navigator} model={route.obj} />;
       case 'setting':
         return <Setting navigator={navigator} model={route} style={{ flex: 1 }} />;
       case 'login':

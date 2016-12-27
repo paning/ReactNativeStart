@@ -48,6 +48,7 @@ class KalixServices extends EventEmitter {
       fetch(LOGIN_PATH, fetchOptions)
     );
   }
+
   logout() {
     SingleKalixServices.fetchPromise(`${SERVER_PATH}/logout`);
     SingleKalixServices.emit('didLogout');

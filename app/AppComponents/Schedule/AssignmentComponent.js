@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   DrawerLayoutAndroid,
-  Dimensions,
   Platform,
   TouchableOpacity,
   TouchableHighlight,
@@ -13,57 +12,19 @@ import {
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout';
 
-import Section from './Section';
-import KService from '../NetworkService/KalixServices';
-import WorkReportCell from './WorkReportCell';
-import RefreshListView from './RefreshListView';
-import Colors from '../CommonComponents/Colors';
-import Styles from '../CommonComponents/CommonStyles';
-import ErrorPlaceholder from '../CommonComponents/ErrorPlacehoderComponent';
-import {formatDate} from '../CommonComponents/FormatUtil';
+import Global from '../../CommonComponents/Globle';
+import Section from '../Section';
+import KService from '../../NetworkService/KalixServices';
+import AssignmentCell from './AssignmentCell';
+import RefreshListView from '../RefreshListView';
+import Colors from '../../CommonComponents/Colors';
+import Styles from '../../CommonComponents/CommonStyles';
+import ErrorPlaceholder from '../../CommonComponents/ErrorPlacehoderComponent';
+import { formatDate } from '../../CommonComponents/FormatUtil';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.8)',
-  },
-  errorText: {
-    fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 2,
-  },
-  errorTextTitle: {
-    textAlign: 'center',
-    fontSize: 15,
-    fontWeight: '500',
-    marginBottom: 10,
-  },
-  reloadText: {
-    borderColor: Colors.lightGray,
-    borderWidth: 1,
-    borderRadius: 3,
-    marginTop: 20,
-    padding: 2,
-  },
-  logout: {
-    marginTop: 40,
-    height: 44,
-    borderRadius: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.green,
-  },
-  logoutText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 17,
-    marginLeft: 30,
-    marginRight: 30,
   },
 
   drawerContainer: {
@@ -118,7 +79,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class WorkReportComponent extends Component {
+export default class AssignmentComponent extends Component {
   static propTypes = {
     navigator: React.PropTypes.object,
     route: React.PropTypes.object,
@@ -187,17 +148,8 @@ export default class WorkReportComponent extends Component {
 
   reloadPath() {
     const jsonstr = {};
-    jsonstr['code%:relation:OrganizationBean'] = '001';
-    if (this.state.workType !== -1) {
-      jsonstr.workType = this.state.workType;
-    }
 
-    if (this.state.simpleDate != null) {
-      jsonstr['beginDate:end:lt'] = formatDate(this.state.simpleDate, 'yyyy-MM-dd hh:mm:ss');
-      jsonstr['endDate:begin:gt'] = formatDate(this.state.simpleDate, 'yyyy-MM-dd hh:mm:ss');
-    }
-
-    const path = `${KService.restPath()}/workreportsearchs?jsonstr=${JSON.stringify(jsonstr)}`;
+    const path = `${KService.restPath()}/assignments?jsonstr=${JSON.stringify(jsonstr)}`;
     return encodeURI(path);
   }
 
@@ -205,7 +157,7 @@ export default class WorkReportComponent extends Component {
   async showPicker(stateKey, options) {
     try {
       const newState = {};
-      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      const { action, year, month, day } = await DatePickerAndroid.open(options);
       if (action === DatePickerAndroid.dismissedAction) {
         // newState[stateKey + 'Text'] = 'dismissed';
       } else {
@@ -214,7 +166,7 @@ export default class WorkReportComponent extends Component {
         newState[`${stateKey}Date`] = date;
       }
       this.setState(newState);
-    } catch ({code, message}) {
+    } catch ({ code, message }) {
       console.warn(`Error in example '${stateKey}': `, message);
     }
   }
@@ -282,7 +234,7 @@ export default class WorkReportComponent extends Component {
 
   renderRow(rowData, sectionID, rowID, highlightRow) {
     return (
-      <WorkReportCell key={rowID} cell={rowData} navigator={this.props.navigator}/>
+      <AssignmentCell key={rowID} cell={rowData} navigator={this.props.navigator} />
     );
   }
 
@@ -331,12 +283,14 @@ export default class WorkReportComponent extends Component {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <TouchableHighlight
                   onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })}
-                  underlayColor={Colors.backGray}>
+                  underlayColor={Colors.backGray}
+                >
                   <Text style={{ padding: 10 }}>日期</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                   onPress={() => this.showPicker('simple', { date: this.state.simpleDate == null ? new Date() : this.state.simpleDate })}
-                  underlayColor={Colors.backGray}>
+                  underlayColor={Colors.backGray}
+                >
                   <Text style={{ padding: 10 }}>{this.state.simpleText}</Text>
                 </TouchableHighlight>
               </View>
@@ -371,12 +325,11 @@ export default class WorkReportComponent extends Component {
       marginTop = 0;
     }
 
-    const drawerWidth = (Dimensions.get('window').width / 5) * 4;
     return (
       <View style={Styles.container}>
         <DrawerLayout
           ref={(ref) => { this.drawer = ref; }}
-          drawerWidth={drawerWidth}
+          drawerWidth={Global.drawerWidth}
           drawerPosition={Platform.OS === 'android' ? DrawerLayoutAndroid.positions.Right : 'right'}
           renderNavigationView={() => this.renderNavigationView()}
         >
@@ -386,7 +339,7 @@ export default class WorkReportComponent extends Component {
             enablePullToRefresh
             renderRow={this.renderRow}
             reloadPromisePath={() => this.reloadPath()}
-            handleReloadData={WorkReportComponent.handleReloadData}
+            handleReloadData={AssignmentComponent.handleReloadData}
             navigator={this.props.navigator}
             maxPage={5}
             contentInset={{ top: 64, left: 0, bottom: 49, right: 0 }}

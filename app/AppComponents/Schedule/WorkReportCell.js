@@ -6,8 +6,8 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
-import Colors from '../CommonComponents/Colors';
-import { formatStringWithHtml } from '../CommonComponents/FormatUtil';
+import Colors from '../../CommonComponents/Colors';
+import { formatStringWithHtml } from '../../CommonComponents/FormatUtil';
 
 const styles = StyleSheet.create({
   cellContentView: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const defaultImage = require('../image/default_user.png');
+const defaultImage = require('../../image/default_user.png');
 
 export default class WorkReportCell extends Component {
   static propTypes = {

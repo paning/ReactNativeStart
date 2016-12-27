@@ -6,9 +6,9 @@ import {
   ScrollView,
 } from 'react-native';
 
-import Styles from '../CommonComponents/CommonStyles';
-import Section from './Section';
-import { formatDateString } from '../CommonComponents/FormatUtil';
+import Styles from '../../CommonComponents/CommonStyles';
+import Section from '../Section';
+import { formatDateString } from '../../CommonComponents/FormatUtil';
 
 export default class WorkReportViewComponent extends Component {
   static propTypes = {
