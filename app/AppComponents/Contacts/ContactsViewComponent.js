@@ -8,96 +8,20 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Globle from '../CommonComponents/Globle';
-import Colors from '../CommonComponents/Colors';
-import Styles from '../CommonComponents/CommonStyles';
-import Section from './Section';
-import KServices from '../NetworkService/KalixServices';
+import Globle from '../../CommonComponents/Globle';
+import Colors from '../../CommonComponents/Colors';
+import Styles from '../../CommonComponents/CommonStyles';
+import Section from './../Section';
+import KServices from '../../NetworkService/KalixServices';
 
-export default class SettingComponent extends Component {
+export default class ContactsViewComponent extends Component {
   static propTypes = {
     navigator: React.PropTypes.object,
     model: React.PropTypes.object,
   };
 
-  static loadPath(userName) {
-    const jsonstr = {};
-    jsonstr.loginName = userName;
-
-    const path = `${KServices.restPath()}/users?jsonstr=${JSON.stringify(jsonstr)}`;
-    return encodeURI(path);
-  }
-
-  static logoutOnPress() {
-    KServices.logout();
-  }
-
   constructor(props) {
     super(props);
-
-    this.state = {
-      id: 0,
-      creationDate: '',
-      createBy: '',
-      updateBy: '',
-      updateDate: '',
-      version: 0,
-      loginName: '',
-      name: '',
-      email: '',
-      phone: '',
-      mobile: '',
-      loginIp: '',
-      loginDate: 1481953571263,
-      available: 1,
-      position: 1,
-      org: '',
-      duty: '',
-      role: '',
-      workGroup: '',
-      sex: '',
-      code: 0,
-      icon: '',
-    };
-  }
-
-  componentDidMount() {
-    try {
-      AsyncStorage.getItem(
-        Globle.USER_NAME,
-        (error, result) => {
-          if (error) {
-            alert(`取值失败:${error}`);
-          } else {
-            this.loadData(result);
-          }
-        },
-      );
-    } catch (error) {
-      alert(`失败${error}`);
-    }
-  }
-
-  loadData(userName) {
-    const that = this;
-    const promise = KServices.fetchPromise(SettingComponent.loadPath(userName));
-    promise
-      .then(value => value.text())
-      .then((responseText) => {
-        const json = JSON.parse(responseText);
-        if (json.totalCount > 0) {
-          const model = json.data[0];
-          that.setState(model);
-        }
-      })
-      .catch((err) => {
-        alert(`系统错误！！！${err}`);
-      })
-      .done(() => {
-        that.setState({
-          loaded: false,
-        });
-      });
   }
 
   render() {
@@ -119,7 +43,7 @@ export default class SettingComponent extends Component {
               </View>
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
-                  <Text style={Styles.sectionLineContentText}>{this.state.loginName}</Text>
+                  <Text style={Styles.sectionLineContentText}>{this.props.model.loginName}</Text>
                 </View>
               </View>
             </View>
@@ -137,7 +61,7 @@ export default class SettingComponent extends Component {
               </View>
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
-                  <Text style={Styles.sectionLineContentText}>{this.state.name}</Text>
+                  <Text style={Styles.sectionLineContentText}>{this.props.model.name}</Text>
                 </View>
               </View>
             </View>
@@ -155,7 +79,7 @@ export default class SettingComponent extends Component {
               </View>
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
-                  <Text style={Styles.sectionLineContentText}>{this.state.email}</Text>
+                  <Text style={Styles.sectionLineContentText}>{this.props.model.email}</Text>
                 </View>
               </View>
             </View>
@@ -173,7 +97,7 @@ export default class SettingComponent extends Component {
               </View>
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
-                  <Text style={Styles.sectionLineContentText}>{this.state.phone}</Text>
+                  <Text style={Styles.sectionLineContentText}>{this.props.model.phone}</Text>
                 </View>
               </View>
             </View>
@@ -191,7 +115,7 @@ export default class SettingComponent extends Component {
               </View>
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
-                  <Text style={Styles.sectionLineContentText}>{this.state.mobile}</Text>
+                  <Text style={Styles.sectionLineContentText}>{this.props.model.mobile}</Text>
                 </View>
               </View>
             </View>
@@ -214,7 +138,7 @@ export default class SettingComponent extends Component {
               <TouchableOpacity style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
                   <Text numberOfLines={1} style={Styles.sectionLineContentText}>
-                    {this.state.org}
+                    {this.props.model.org}
                   </Text>
                 </View>
                 <View style={{ width: 24, paddingLeft: 10 }}>
@@ -241,7 +165,7 @@ export default class SettingComponent extends Component {
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
                   <Text numberOfLines={1} style={Styles.sectionLineContentText}>
-                    {this.state.duty}
+                    {this.props.model.duty}
                   </Text>
                 </View>
               </View>
@@ -261,7 +185,7 @@ export default class SettingComponent extends Component {
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
                   <Text numberOfLines={1} style={Styles.sectionLineContentText}>
-                    {this.state.role}
+                    {this.props.model.role}
                   </Text>
                 </View>
               </View>
@@ -281,20 +205,13 @@ export default class SettingComponent extends Component {
               <View style={Styles.sectionLineRightView}>
                 <View style={{ flex: 1 }}>
                   <Text numberOfLines={1} style={Styles.sectionLineContentText}>
-                    {this.state.workGroup}
+                    {this.props.model.workGroup}
                   </Text>
                 </View>
               </View>
             </View>
           </View>
         </Section>
-
-        <TouchableOpacity
-          onPress={() => SettingComponent.logoutOnPress()}
-          style={{ margin: 10, height: 50, backgroundColor: Colors.mainColor, borderRadius: 5, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text style={{ color: '#ffffff', fontSize: 20, fontWeight: 'bold' }}>退出登录</Text>
-        </TouchableOpacity>
       </ScrollView>
     );
   }

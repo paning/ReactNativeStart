@@ -13,6 +13,9 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import TestListView from './TestListView';
 
+import ContactsComponent from './Contacts/ContactsComponent';
+import ContactsViewComponent from './Contacts/ContactsViewComponent';
+
 import OA from './OA/main';
 import TaskComponent from './OA/TaskComponent';
 import TaskView from './OA/TaskView';
@@ -202,6 +205,9 @@ const NavigationBarRouteMapper = {
   Title(route, navigator, index, navState) {
     let title;
     switch (route.id) {
+      case 'contacts':
+        title = '联系人';
+        break;
       case 'oa':
         title = '办公自动化';
         break;
@@ -302,8 +308,8 @@ const routes = {
   tabObjForRoute(routeName) {
     let tab = { tabName: 'Feed', iconName: 'ios-home' };
     switch (routeName) {
-      case 'test':
-        tab = { tabName: '工作计划', iconName: 'ios-home' };
+      case 'contacts':
+        tab = { tabName: '联系人', iconName: 'ios-home' };
         break;
       case 'oa':
         tab = { tabName: '办公', iconName: 'ios-flame' };
@@ -333,6 +339,10 @@ const routes = {
     switch (route.id) {
       case 'test':
         return <TestListView navigator={navigator} route={route} />;
+      case 'contacts':
+        return <ContactsComponent navigator={navigator} route={route} />;
+      case 'contactsView':
+        return <ContactsViewComponent navigator={navigator} model={route.obj} />;
       case 'oa':
         return <OA navigator={navigator} route={route} style={{ flex: 1 }} />;
       case 'task':

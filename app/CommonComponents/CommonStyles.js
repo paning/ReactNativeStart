@@ -93,27 +93,6 @@ const CommonStyles = StyleSheet.create({
     color: '#aaaaaa',
   },
 
-  sectionLine: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderColor: '#C8C7CC',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-
-  sectionLineRightView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  sectionLineTitleText: {
-    color: '#000000',
-  },
-
-  sectionLineContentText: {
-    color: '#C7C7CC',
-  },
-
   htmlText: {
     padding: 8,
     paddingLeft: 10,
@@ -179,6 +158,42 @@ const CommonStyles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
   },
+
+  sectionLineView: {
+    marginLeft: 10,
+    borderColor: '#C8C7CC',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  sectionLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginRight: 10,
+    backgroundColor: '#FFFFFF',
+  },
+  sectionLineLeftView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 5,
+  },
+  sectionLineRightView: {
+    flex: 3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 5,
+  },
+  sectionLineTitleText: {
+    color: '#000000',
+  },
+
+  sectionLineContentText: {
+    color: '#C7C7CC',
+    textAlign: 'right',
+    fontStyle: 'italic',
+  },
+
 });
 
 module.exports = CommonStyles;

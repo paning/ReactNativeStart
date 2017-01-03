@@ -4,157 +4,148 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  DrawerLayoutAndroid,
-  ProgressBarAndroid,
-  ScrollView,
   ListView,
   TouchableOpacity,
+  Image,
+  AlertIOS
 } from 'react-native';
 
-export default class TestListView extends Component {
-  constructor(props) {
-    super(props);
-  };
+var Car = require('./Cars.json');
 
-  openDrawer() {
-      this.drawer.openDrawer();
-  }
+var TestListView = React.createClass({
 
-  render() {
-    var navigationView = (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text>abc</Text>
-      </View>
+  getInitialState(){
+    var getSectionData = (dataBlob,sectionID) => {
+      return dataBlob[sectionID];
+    };
+
+    var getRowData = (dataBlob,sectionID,rowID) => {
+      return dataBlob[sectionID + ":" + rowID];
+    };
+
+    return {
+      dataSource:new ListView.DataSource({
+        getSectionData:getSectionData,
+        getRowData:getRowData,
+        rowHasChanged:(r1 , r2) => r1 !== r2,
+        sectionHeaderHasChanged:(s1, s2) => s1 !== s2,
+      })
+    };
+  },
+
+  render(){
+    return(
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        renderSectionHeader={this.renderSectionHeader}
+        contentContainerStyle={styles.listStyle}
+      />
     );
+  },
 
+  componentDidMount(){
+    this.loadListViewDataFormJson();
+  },
 
+  loadListViewDataFormJson(){
+    //    拿到所有的json数据
+    var jsonData = Car.data;
+
+    //    定义变量
+    var dataBlob = {},
+      sectionIDs = [],
+      rowIDs = [];
+
+    for (var i = 0 ; i < jsonData.length ; i++){
+      //    1.拿到所有的sectionId
+      sectionIDs.push(i);
+
+      //    2.把组中的内容放入dataBlob内容中
+      dataBlob[i] = jsonData[i].title;
+
+      //    3.设置改组中每条数据的结构
+      rowIDs[i] = [];
+
+      //    4.取出改组中所有的数据
+      var cars = jsonData[i].cars;
+
+      //    5.便利cars,设置每组的列表数据
+      for (var j = 0 ; j < cars.length ; j++){
+        //    改组中的每条对应的rowId
+        rowIDs[i].push(j);
+
+        // 把每一行中的内容放入dataBlob对象中
+        dataBlob[i+':'+j] = cars[j];
+      }
+    }
+
+    // 更新状态
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlob,sectionIDs,rowIDs)
+    });
+  },
+
+  // 每一行中的数据
+  renderRow(rowData){
     return (
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        ref={(drawer) => { this.drawer = drawer; }}
-        renderNavigationView={() => navigationView}
-        >
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-      <View>
-        <View style = {{
-          backgroundColor: '#f4ec34',
-          height:54,
-          flexDirection:'row',
-          justifyContent:'space-between',
-          alignItems:'center',
-          paddingLeft: 20,
-          paddingRight:20,
-        }}>
-          <TouchableOpacity onPress={this.openDrawer}>
-            <Image  source={require('../image/logo.png')} style={{  width: 20, height: 20}} />
-         </TouchableOpacity>
-          <Text style={{ fontSize:18,  color:'#484848' }}>SHOP</Text>
-          <Image  source={require('../image/logo.png')} style={{  width: 20, height: 20}} />
-        </View>
-        <Image source= {{ uri: 'http://img.hb.aicdn.com/cbf3ebcae08ef62ef02dd61aa2407414dc64e794150313-KRUD1s_fw658' }}
-          style={{ height: 220, margin: 20}}  />
-        <Text style={{ fontSize:16,  color:'#484848', alignSelf:'center' }}>HOT PRODUCTS</Text>
-        <View style={ styles.photoRow }>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1YQAPKVXXXXa9XFXXwu0bFXXX.png_270x270Q90.jpg' }}
-            style={ styles.photoItem }  />
-            <Text style={styles.photoName }>TEL ORGES</Text>
-            <Text style={styles.photoPrice }>$99</Text>
-            <TouchableOpacity onPress={this.openDrawer.bind()}>
-              <Image  source={require('../image/logo.png')} style={{  width: 20, height: 20}} />
-           </TouchableOpacity>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1DteFKVXXXXXQapXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={  styles.photoItem  }  />
-            <Text style={styles.photoName}>ARFL JUYHS</Text>
-            <Text style={styles.photoPrice }>$34.2</Text>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1dQGTKVXXXXaaXVXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>TKLL ORGES</Text>
-            <Text style={styles.photoPrice }>$182</Text>
+      <TouchableOpacity>
+        <View style={styles.rowView}>
+          <Image source={{uri:rowData.icon}} style={styles.rowImage}/>
+          <View style={styles.rowTitleSup}>
+            <Text style={styles.rowTitle}>{rowData.name}</Text>
           </View>
         </View>
-        <Text style={{ fontSize:16,  color:'#484848',  alignSelf:'center' , marginTop:20 }}>NEW COLLECTIONS</Text>
-        <View style={ styles.photoRow }>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1rzGNKVXXXXbGXVXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>TEL ORGES</Text>
-            <Text style={styles.photoPrice }>$99</Text>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1rzGNKVXXXXbGXVXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>ARFL JUYHS</Text>
-            <Text style={styles.photoPrice }>$34.2</Text>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1uBUxKVXXXXcGXpXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>TKLL ORGES</Text>
-            <Text style={styles.photoPrice }>$182</Text>
-          </View>
-        </View>
-        <Text style={{ fontSize:16,  color:'#484848',  alignSelf:'center' , marginTop:20 }}>MOST POP</Text>
-        <View style={ styles.photoRow }>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1Rqa3KVXXXXb6XpXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>TEL ORGES</Text>
-            <Text style={styles.photoPrice }>$99</Text>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1Rqa3KVXXXXb6XpXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>ARFL JUYHS</Text>
-            <Text style={styles.photoPrice }>$34.2</Text>
-          </View>
-          <View>
-          <Image source= {{ uri: 'https://gw.alicdn.com/bao/uploaded/TB1lMksKVXXXXa7XpXXSutbFXXX.jpg_270x270Q90.jpg' }}
-            style={ styles.photoItem  }  />
-            <Text style={styles.photoName}>TKLL ORGES</Text>
-            <Text style={styles.photoPrice }>$182</Text>
-          </View>
-        </View>
-      </View>
-      </ScrollView>
-     </DrawerLayoutAndroid>
+      </TouchableOpacity>
+    );
+  },
 
+  // 每一组对应的数据
+  renderSectionHeader(sectionData,sectionId){
+    return (
+      <View style={styles.sectionView}>
+        <Text style={styles.sectionTitle}>{sectionData}</Text>
+      </View>
     );
   }
-};
-
-var styles = StyleSheet.create({
- contentContainer: {
- },
- listItem:{
-
- },
- photoRow:{
-   flexDirection:'row',
-   justifyContent: 'space-between',
-   paddingLeft: 20,
-   paddingRight: 20,
-   marginTop:10,
- },
- photoItem:{
-   height: 120,
-   width:90 ,
-   alignItems: 'stretch' ,
-   alignSelf:'center'
- },
- photoName:{
-   fontSize:14,
-   color:'#f39d7f',
-   alignSelf:'center',
- },
- photoPrice:{
-   fontSize:12,  color:'#484848', alignSelf:'center'
- },
 
 });
+
+
+const styles = StyleSheet.create({
+  listStyle:{
+
+  },
+  sectionView:{
+    height:22,
+    backgroundColor:"#c3c3c3",
+    justifyContent:"center"
+  },
+
+  sectionTitle:{
+    marginLeft:16,
+  },
+  rowView:{
+    height:44,
+    flexDirection:'row',
+    paddingLeft:16,
+    alignItems:'center'
+  },
+  rowImage:{
+    width:44,
+    height:44
+  },
+  rowTitleSup:{
+    height:44,
+    width:700,
+    borderBottomWidth:1,
+    borderBottomColor:"#c3c3c3",
+    marginLeft:16,
+    justifyContent:'center'
+  },
+  rowTitle:{
+    fontSize:16,
+  }
+});
+
+module.exports = TestListView;
