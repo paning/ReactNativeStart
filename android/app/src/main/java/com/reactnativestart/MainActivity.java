@@ -1,6 +1,7 @@
 package com.reactnativestart;
 
 import com.facebook.react.ReactActivity;
+import com.facebook.react.views.image.ReactImageView;
 
 public class MainActivity extends ReactActivity {
 

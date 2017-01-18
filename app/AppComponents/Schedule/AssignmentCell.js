@@ -3,9 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableHighlight,
 } from 'react-native';
+
 import Colors from '../../CommonComponents/Colors';
 import { formatStringWithHtml } from '../../CommonComponents/FormatUtil';
 

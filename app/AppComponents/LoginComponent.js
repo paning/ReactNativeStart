@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,29 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage,
+  requireNativeComponent,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Globle from '../CommonComponents/Globle';
-import Storage from '../CommonComponents/Storage';
 import Colors from '../CommonComponents/Colors';
 import KServices from '../NetworkService/KalixServices';
 
+import Circle from './Circle';
+import MethodAndroid from './MethodAndroid';
+
 const logo = require('../image/logo.png');
+
+const attrs = {
+  name: 'RCTView',
+  propTypes: {
+    ...View.propTypes,
+    titleText: PropTypes.string,
+    titleTextColor: PropTypes.string,
+    titleTextSize: PropTypes.number,
+  },
+};
+const RCTTextView = requireNativeComponent('RCTMaterialView', attrs);
 
 const LoginStyles = StyleSheet.create({
   mainView: {
@@ -168,6 +182,10 @@ export default class LoginComponent extends Component {
       });
   }
 
+  onPressTest() {
+    MethodAndroid.show();
+  }
+
   render() {
     return (
       <View style={LoginStyles.mainView}>
@@ -214,6 +232,17 @@ export default class LoginComponent extends Component {
         </TouchableOpacity>
 
         <Text style={{ color: '#000000', textAlign: 'center', marginTop: 10 }} >忘记密码？</Text>
+
+        <TouchableOpacity onPress={() => this.onPressTest()} style={LoginStyles.loginTextView}>
+          <Text style={LoginStyles.loginText}>测试</Text>
+        </TouchableOpacity>
+
+        <RCTTextView
+          style={{ flex: 1, width: 100, height: 100 }}
+          titleText={'好好计划'}
+          titleTextColor={'#317ef3'}
+          titleTextSize={50}
+        />
       </View>
     );
   }

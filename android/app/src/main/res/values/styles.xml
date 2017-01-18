@@ -5,4 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <declare-styleable name="ReactMaterialView">
+        <attr name="materialTitle" format="string"/>
+        <attr name="materialColor" format="color"/>
+        <attr name="materialSize" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -164,6 +164,9 @@ const CommonStyles = StyleSheet.create({
     borderColor: '#C8C7CC',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  sectionLineLastView: {
+    marginLeft: 10,
+  },
   sectionLine: {
     flexDirection: 'row',
     justifyContent: 'space-between',

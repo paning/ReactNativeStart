@@ -3,26 +3,18 @@ import {
   View,
   Text,
   ScrollView,
-  AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Globle from '../../CommonComponents/Globle';
 import Colors from '../../CommonComponents/Colors';
 import Styles from '../../CommonComponents/CommonStyles';
 import Section from './../Section';
-import KServices from '../../NetworkService/KalixServices';
 
 export default class ContactsViewComponent extends Component {
   static propTypes = {
-    navigator: React.PropTypes.object,
     model: React.PropTypes.object,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
