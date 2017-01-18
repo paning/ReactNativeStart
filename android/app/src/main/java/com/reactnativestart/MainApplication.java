@@ -3,6 +3,7 @@ package com.reactnativestart;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.kalix.android.IM.HXPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -29,7 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new MainPackage(),
                     new MethodPackage(),
-                    new ReactMaterialPackage()
+                    new ReactMaterialPackage(),
+                    new HXPackage()
             );
         }
     };

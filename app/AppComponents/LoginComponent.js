@@ -18,6 +18,8 @@ import KServices from '../NetworkService/KalixServices';
 import Circle from './Circle';
 import MethodAndroid from './MethodAndroid';
 
+import HXModule from '../IM/Module/HXModule';
+
 const logo = require('../image/logo.png');
 
 const attrs = {
@@ -79,6 +81,25 @@ const LoginStyles = StyleSheet.create({
   },
 });
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
+});
+
 export default class LoginComponent extends Component {
   static propTypes = {
     didLogin: React.PropTypes.func,
@@ -92,6 +113,9 @@ export default class LoginComponent extends Component {
       password: '',
       logining: false,
       loginError: null,
+
+        isLogin: false,
+
     };
   }
 
@@ -186,7 +210,62 @@ export default class LoginComponent extends Component {
     MethodAndroid.show();
   }
 
+    onPressTest1() {
+        if (this.state.isLogin) {
+            HXModule.logout(
+                () => this.setState({
+                    isLogin: !this.state.isLogin,
+                }),
+                (message) => alert(message));
+        }
+        else {
+            HXModule.initHXSDK();
+            HXModule.login("zxcvbn12","123",
+                () => this.setState({
+                    isLogin: !this.state.isLogin,
+                }),
+                (message) => alert(message));
+        }
+    }
+
+    onPressTest2() {
+        //HXModule.startVideoActivity("zxcvbn34",(err) => alert(err));
+        //HXModule.startChatActivity((err) => alert(err));
+        HXModule.startNewMainActivity((err) => alert(err));
+    }
+
   render() {
+
+      let container;
+      if (this.state.isLogin) {
+        /*(curUserName) => {
+         HXModule.getCurrentUsernName;
+         cView = (
+         <View>
+         <EaseTitleBar title={curUserName} style={{width:100,height:100}}/>
+         </View>
+         );
+         }*/
+          container = (
+              <View>
+                <TouchableOpacity onPress={() => this.onPressTest1()}>
+                  <Text style={styles.instructions}>注销</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.onPressTest2()}>
+                  <Text style={styles.instructions}>测试module功能</Text>
+                </TouchableOpacity>
+              </View>
+          );
+      }
+      else {
+          container = (
+              <TouchableOpacity onPress={() => this.onPressTest1()}>
+                <Text style={styles.instructions}>登录</Text>
+              </TouchableOpacity>
+          );
+      }
+
+
     return (
       <View style={LoginStyles.mainView}>
         <View style={LoginStyles.imageView}>
@@ -237,12 +316,8 @@ export default class LoginComponent extends Component {
           <Text style={LoginStyles.loginText}>测试</Text>
         </TouchableOpacity>
 
-        <RCTTextView
-          style={{ flex: 1, width: 100, height: 100 }}
-          titleText={'好好计划'}
-          titleTextColor={'#317ef3'}
-          titleTextSize={50}
-        />
+          {container}
+
       </View>
     );
   }
