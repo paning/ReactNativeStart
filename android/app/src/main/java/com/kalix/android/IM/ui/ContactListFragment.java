@@ -69,11 +69,11 @@ public class ContactListFragment extends EaseContactListFragment {
         super.initView();
         @SuppressLint("InflateParams") View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.em_contacts_header, null);
         HeaderItemClickListener clickListener = new HeaderItemClickListener();
-        applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
-        applicationItem.setOnClickListener(clickListener);
-        headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.chat_room_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.robot_item).setOnClickListener(clickListener);
+//        applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
+//        applicationItem.setOnClickListener(clickListener);
+//        headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
+//        headerView.findViewById(R.id.chat_room_item).setOnClickListener(clickListener);
+//        headerView.findViewById(R.id.robot_item).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
@@ -94,11 +94,11 @@ public class ContactListFragment extends EaseContactListFragment {
         if(inviteMessgeDao == null){
             inviteMessgeDao = new InviteMessgeDao(getActivity());
         }
-        if(inviteMessgeDao.getUnreadMessagesCount() > 0){
-            applicationItem.showUnreadMsgView();
-        }else{
-            applicationItem.hideUnreadMsgView();
-        }
+//        if(inviteMessgeDao.getUnreadMessagesCount() > 0){
+//            applicationItem.showUnreadMsgView();
+//        }else{
+//            applicationItem.hideUnreadMsgView();
+//        }
     }
     
     
@@ -184,7 +184,7 @@ public class ContactListFragment extends EaseContactListFragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-            case R.id.application_item:
+/*            case R.id.application_item:
                 // 进入申请与通知页面
                 startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
                 break;
@@ -199,7 +199,7 @@ public class ContactListFragment extends EaseContactListFragment {
             case R.id.robot_item:
                 //进入Robot列表页面
 //                startActivity(new Intent(getActivity(), RobotsActivity.class));
-                break;
+                break;*/
 
             default:
                 break;
