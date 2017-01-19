@@ -12,25 +12,25 @@
         app:contactItemImage="@drawable/em_new_friends_icon"
         app:contactItemName="@string/Application_and_notify" />
 
-    <com.kalix.android.IM.widget.ContactItemView
-        android:id="@+id/group_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/group_chat" />
+    <!--<com.kalix.android.IM.widget.ContactItemView-->
+        <!--android:id="@+id/group_item"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:contactItemImage="@drawable/em_groups_icon"-->
+        <!--app:contactItemName="@string/group_chat" />-->
 
-    <com.kalix.android.IM.widget.ContactItemView
-        android:id="@+id/chat_room_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/chat_room" />
+    <!--<com.kalix.android.IM.widget.ContactItemView-->
+        <!--android:id="@+id/chat_room_item"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:contactItemImage="@drawable/em_groups_icon"-->
+        <!--app:contactItemName="@string/chat_room" />-->
 
-    <com.kalix.android.IM.widget.ContactItemView
-        android:id="@+id/robot_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/robot_chat" />
+    <!--<com.kalix.android.IM.widget.ContactItemView-->
+        <!--android:id="@+id/robot_item"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:contactItemImage="@drawable/em_groups_icon"-->
+        <!--app:contactItemName="@string/robot_chat" />-->
 
 </LinearLayout>
