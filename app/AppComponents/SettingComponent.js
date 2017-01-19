@@ -84,6 +84,11 @@ export default class SettingComponent extends Component {
     promise
       .then(value => value.text())
       .then((responseText) => {
+        if (responseText.indexOf('globle-custom.js') >= 0) {
+          KServices.logout();
+          return;
+        }
+
         const json = JSON.parse(responseText);
         if (json.totalCount > 0) {
           const model = json.data[0];

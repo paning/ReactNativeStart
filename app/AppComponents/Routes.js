@@ -309,7 +309,7 @@ const routes = {
     let tab = { tabName: 'Feed', iconName: 'ios-home' };
     switch (routeName) {
       case 'contacts':
-        tab = { tabName: '联系人', iconName: 'ios-home' };
+        tab = { tabName: '通讯录', iconName: 'ios-home' };
         break;
       case 'oa':
         tab = { tabName: '办公', iconName: 'ios-flame' };
