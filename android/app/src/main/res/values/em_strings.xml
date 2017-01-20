@@ -53,7 +53,10 @@
     <string name="picture">[Picture]</string>
     <string name="video">[Video]</string>
     <string name="file">[file]</string>
+    <string name="voice_prefix">[Voice]</string>
     <string name="voice_call">[Voice call]</string>
+    <string name="video_call">[Video call]</string>
+    <string name="dynamic_expression">[Dynamic expression]</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
     <string name="button_search">Find</string>
@@ -135,6 +138,7 @@
     <string name="newchat">Create new group</string>
     <string name="agree">Agree</string>
     <string name="refuse">Refuse</string>
+    <string name="Group_chat">Group chat</string>
     <string name="not_download">Did not download:</string>
     <string name="Please_enter_a_username">Please enter a username</string>
     <string name="is_down_please_wait">Downloading video, please wait a moment</string>
@@ -143,6 +147,7 @@
     <string name="refuse_join_group">refuse join group:</string>
     <string name="at_your_in_group">%s @ you in group chat</string>
     <string name="emojicon_test_name">Test</string>
+    <string name="all_members">All members</string>
     
     <string name="not_add_myself">"Can't add yourself"</string>
     <string name="This_user_is_already_your_friend">This user is already your friend</string>
@@ -280,6 +285,7 @@
     <string name="Is_download_voice_click_later">Downloading the voice message, click later</string>
     <string name="Send_the_following_pictures">Send the following pictures?</string>
     <string name="search_new">Search</string>
+    <string name="were_mentioned">You were montioned</string>
     
     <string name="Delete_the_contact">Delete the contact</string>
     <string name="Move_into_the_blacklist_new">Move into the blacklist</string>
@@ -294,6 +300,7 @@
     <string name="update_black_list_failed">Update black list failed</string>
     <string name="update_groups_failed">Update groups failed</string>
 
+    <string name="gorup_not_found">Can not find this group</string>
     <string name="no_more_messages">no more messages</string>
     <string name="join_public_group">Join public group</string>
     <string name="chatroom_allow_owner_leave">Allow chatroom owner leave</string>
